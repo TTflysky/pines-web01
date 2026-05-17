@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>生产实力 | 派恩斯工业</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;background:#f1f5f9;font-family:'Microsoft YaHei',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+#app{width:100%;max-width:450px;margin:0 auto;background:#fff;min-height:100vh;position:relative;overflow:hidden}
+
+/* 导航栏 */
+.nav-bar{position:sticky;top:0;z-index:1000;width:100%;height:52px;background:#1a1a1a;display:flex;align-items:center;padding:0 16px;gap:12px}
+.nav-back{color:#94a3b8;font-size:20px;cursor:pointer;padding:4px}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-logo-icon{width:28px;height:28px;background:#2563eb;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff}
+.nav-logo-text{color:#fff;font-size:13px;font-weight:700}
+.nav-menu-btn{color:#94a3b8;font-size:20px;cursor:pointer;margin-left:auto;padding:8px}
+
+/* 页面标题 */
+.page-header{background:#1a1a1a;padding:20px 16px 24px}
+.page-eyebrow{font-size:10px;color:#64748b;letter-spacing:2px;font-family:Arial,sans-serif;margin-bottom:4px}
+.page-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:4px}
+.page-sub{font-size:12px;color:#94a3b8}
+
+/* 区块标题 */
+.section-header{display:flex;align-items:baseline;gap:8px;padding:20px 16px 12px}
+.section-header h2{font-size:16px;font-weight:700;color:#1a1a1a}
+.section-header span{font-size:10px;color:#94a3b8;letter-spacing:1px;font-family:Arial,sans-serif}
+
+/* 流程样式 */
+.process-section{background:#fff;padding:0 16px 16px}
+
+/* 8步流程 */
+.flow-type-label{display:inline-flex;align-items:center;gap:6px;background:#1a1a1a;color:#fff;font-size:11px;font-weight:700;padding:6px 12px;border-radius:20px;margin-bottom:14px}
+.flow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}
+.flow-step{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:10px 6px;text-align:center;position:relative}
+.step-num{width:18px;height:18px;background:#2563eb;color:#fff;font-size:9px;font-weight:800;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 6px}
+.step-name{font-size:10px;font-weight:700;color:#1a1a1a;line-height:1.3;margin-bottom:3px}
+.step-desc{font-size:9px;color:#94a3b8;line-height:1.3}
+.flow-arrow{text-align:center;font-size:12px;color:#2563eb;margin:4px 0}
+
+/* 设备卡片 */
+.card{padding:0 16px 16px}
+.equip-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.equip-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px;transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.equip-card:hover{transform:translateY(-2px)}
+.equip-icon{width:36px;height:36px;background:#eff6ff;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.equip-name{font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:3px}
+.equip-desc{font-size:10px;color:#64748b;line-height:1.4}
+
+/* 检测设备大卡 */
+.insp-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:10px}
+.insp-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.insp-icon{width:36px;height:36px;background:#eff6ff;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.insp-label{font-size:10px;color:#64748b}
+.insp-name{font-size:13px;font-weight:700;color:#1a1a1a}
+.insp-desc{font-size:11px;color:#64748b;line-height:1.5}
+
+/* 数据亮点 */
+.highlight-strip{background:#eff6ff;margin:8px 16px;border-radius:10px;padding:14px 16px;display:flex;justify-content:space-around;gap:12px}
+.hl-item{text-align:center;flex:1}
+.hl-num{font-size:18px;font-weight:800;color:#2563eb;font-family:Arial,sans-serif}
+.hl-unit{font-size:11px;color:#64748b;margin-top:2px}
+
+/* 苹果风动效 */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{opacity:0;animation:fadeUp .5s cubic-bezier(.4,0,.2,1) forwards}
+.d1{animation-delay:.06s}.d2{animation-delay:.12s}.d3{animation-delay:.18s}.d4{animation-delay:.24s}.d5{animation-delay:.30s}.d6{animation-delay:.36s}.d7{animation-delay:.42s}.d8{animation-delay:.48s}
+
+/* 底部 */
+.bottom-placeholder{height:56px}
+
+/* 侧边菜单 */
+.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1001;opacity:0;visibility:hidden;transition:opacity .3s}
+.menu-overlay.active{opacity:1;visibility:visible}
+.menu-panel{position:fixed;top:0;right:0;width:260px;height:100%;background:#1a1a1a;z-index:1002;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;padding:60px 0 20px}
+.menu-panel.active{transform:translateX(0)}
+.menu-close{position:absolute;top:14px;right:16px;color:#94a3b8;font-size:24px;cursor:pointer;line-height:1;padding:4px}
+.menu-item{color:#fff;font-size:15px;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer}
+.menu-item span{color:#2563eb;font-size:13px;margin-right:10px}
+
+/* 底部固定栏 */
+.bottom-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:450px;height:56px;background:#fff;border-top:1px solid #e2e8f0;display:flex;align-items:center;z-index:999}
+.bottom-bar-tel{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;height:40px;margin:8px 0 8px 12px;border:1.5px solid #2563eb;border-radius:10px;color:#2563eb;font-size:13px;font-weight:700;cursor:pointer}
+.bottom-bar-contact{flex:2;display:flex;align-items:center;justify-content:center;gap:4px;height:40px;margin:8px 12px 8px 8px;background:#ea580c;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- 导航栏 -->
+<nav class="nav-bar">
+  <a href="index.html" class="nav-back">&#8592;</a>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">P</div>
+    <div class="nav-logo-text">PINES 派恩斯</div>
+  </div>
+  <div class="nav-menu-btn" onclick="openMenu()">&#9776;</div>
+</nav>
+
+<!-- 侧边菜单 -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="menu-panel" id="menuPanel">
+  <div class="menu-close" onclick="closeMenu()">&#10005;</div>
+  <div class="menu-item" onclick="location.href='index.html'"><span>&#8962;</span>首页</div>
+  <div class="menu-item" onclick="location.href='category-pins.html'"><span>&#9733;</span>产品中心</div>
+  <div class="menu-item" onclick="location.href='about-cert.html'"><span>&#9878;</span>资质认证</div>
+  <div class="menu-item" onclick="location.href='about-production.html'"><span>&#9881;</span>生产实力</div>
+  <div class="menu-item" onclick="location.href='about-applications.html'"><span>&#9679;</span>应用案例</div>
+  <div class="menu-item" onclick="location.href='about-clients.html'"><span>&#9670;</span>客户案例</div>
+</div>
+
+<!-- 页面标题 -->
+<div class="page-header">
+  <div class="page-eyebrow">PINES INDUSTRIAL</div>
+  <div class="page-title">生产实力</div>
+  <div class="page-sub">完整工序链 · 先进设备 · 精密检测</div>
+</div>
+
+<!-- 产能亮点 -->
+<div class="highlight-strip">
+  <div class="hl-item">
+    <div class="hl-num">80+</div>
+    <div class="hl-unit">冲压设备台</div>
+  </div>
+  <div class="hl-item">
+    <div class="hl-num">40+</div>
+    <div class="hl-unit">机加工设备</div>
+  </div>
+  <div class="hl-item">
+    <div class="hl-num">20+</div>
+    <div class="hl-unit">光学筛选机</div>
+  </div>
+  <div class="hl-item">
+    <div class="hl-num">8000+</div>
+    <div class="hl-unit">在库SKU</div>
+  </div>
+</div>
+
+<!-- 弹性销生产流程 -->
+<div class="section-header"><h2>弹性销生产流程</h2><span>SPRING PIN PROCESS</span></div>
+<div class="process-section">
+  <div class="flow-type-label">
+    <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+    共8道工序
+  </div>
+  <div class="flow-grid">
+    <div class="flow-step fade-up d1">
+      <div class="step-num">1</div>
+      <div class="step-name">模具制造</div>
+      <div class="step-desc">定制级模具</div>
+    </div>
+    <div class="flow-step fade-up d2">
+      <div class="step-num">2</div>
+      <div class="step-name">原材料分条</div>
+      <div class="step-desc">独立分切设备</div>
+    </div>
+    <div class="flow-step fade-up d3">
+      <div class="step-num">3</div>
+      <div class="step-name">冲压</div>
+      <div class="step-desc">25-400T冲床</div>
+    </div>
+    <div class="flow-step fade-up d4">
+      <div class="step-num">4</div>
+      <div class="step-name">热处理</div>
+      <div class="step-desc">油淬/盐浴炉</div>
+    </div>
+  </div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-grid">
+    <div class="flow-step fade-up d5">
+      <div class="step-num">5</div>
+      <div class="step-name">研磨</div>
+      <div class="step-desc">精密研磨</div>
+    </div>
+    <div class="flow-step fade-up d6">
+      <div class="step-num">6</div>
+      <div class="step-name">表面磷化</div>
+      <div class="step-desc">全自动磷化线</div>
+    </div>
+    <div class="flow-step fade-up d7">
+      <div class="step-num">7</div>
+      <div class="step-name">光学筛选</div>
+      <div class="step-desc">尺寸全检</div>
+    </div>
+    <div class="flow-step fade-up d8">
+      <div class="step-num">8</div>
+      <div class="step-name">包装入库</div>
+      <div class="step-desc">扫码追溯</div>
+    </div>
+  </div>
+</div>
+
+<!-- 实心销生产流程 -->
+<div class="section-header"><h2>实心销生产流程</h2><span>SOLID PIN PROCESS</span></div>
+<div class="process-section">
+  <div class="flow-type-label" style="background:#16a34a">
+    <svg width="10" height="10" viewBox="0 0 10 10"><rect x="2" y="2" width="6" height="6" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+    共8道工序
+  </div>
+  <div class="flow-grid">
+    <div class="flow-step fade-up d1">
+      <div class="step-num" style="background:#16a34a">1</div>
+      <div class="step-name">断料</div>
+      <div class="step-desc">精密裁切</div>
+    </div>
+    <div class="flow-step fade-up d2">
+      <div class="step-num" style="background:#16a34a">2</div>
+      <div class="step-name">外圆磨</div>
+      <div class="step-desc">外径精磨</div>
+    </div>
+    <div class="flow-step fade-up d3">
+      <div class="step-num" style="background:#16a34a">3</div>
+      <div class="step-name">车倒角</div>
+      <div class="step-desc">端面加工</div>
+    </div>
+    <div class="flow-step fade-up d4">
+      <div class="step-num" style="background:#16a34a">4</div>
+      <div class="step-name">热处理</div>
+      <div class="step-desc">奥氏体电炉</div>
+    </div>
+  </div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-grid">
+    <div class="flow-step fade-up d5">
+      <div class="step-num" style="background:#16a34a">5</div>
+      <div class="step-name">精磨</div>
+      <div class="step-desc">高精度磨削</div>
+    </div>
+    <div class="flow-step fade-up d6">
+      <div class="step-num" style="background:#16a34a">6</div>
+      <div class="step-name">抛光</div>
+      <div class="step-desc">表面光洁</div>
+    </div>
+    <div class="flow-step fade-up d7">
+      <div class="step-num" style="background:#16a34a">7</div>
+      <div class="step-name">上油</div>
+      <div class="step-desc">防锈保护</div>
+    </div>
+    <div class="flow-step fade-up d8">
+      <div class="step-num" style="background:#16a34a">8</div>
+      <div class="step-name">分选</div>
+      <div class="step-desc">插板分选机</div>
+    </div>
+  </div>
+</div>
+
+<!-- 核心设备 -->
+<div class="section-header"><h2>核心设备</h2><span>KEY EQUIPMENT</span></div>
+<div class="card">
+  <div class="equip-grid">
+    <div class="equip-card fade-up d1">
+      <div class="equip-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="2" stroke="#2563eb" stroke-width="1.5" fill="none"/><line x1="2" y1="6" x2="16" y2="6" stroke="#2563eb" stroke-width="1"/><line x1="2" y1="10" x2="16" y2="10" stroke="#2563eb" stroke-width="1"/><line x1="6" y1="2" x2="6" y2="16" stroke="#2563eb" stroke-width="1"/></svg>
+      </div>
+      <div class="equip-name">冲压设备</div>
+      <div class="equip-desc">25-400T全自动冲压设备超80台，覆盖各类规格生产需求</div>
+    </div>
+    <div class="equip-card fade-up d2">
+      <div class="equip-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="#2563eb" stroke-width="1.5" fill="none"/><circle cx="9" cy="9" r="3" stroke="#2563eb" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="equip-name">机加工设备</div>
+      <div class="equip-desc">超过40台机加工机器，满足精密零件加工需求</div>
+    </div>
+    <div class="equip-card fade-up d3">
+      <div class="equip-icon" style="background:#fef3c7">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="#d97706" stroke-width="1.5" stroke-linecap="round"/><rect x="4" y="4" width="10" height="10" rx="1" stroke="#d97706" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="equip-name">热处理炉</div>
+      <div class="equip-desc">网带油浴炉1条 + 奥氏体盐浴炉2条，精准温控热处理</div>
+    </div>
+    <div class="equip-card fade-up d4">
+      <div class="equip-icon" style="background:#dcfce7">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="4" width="12" height="10" rx="1" stroke="#16a34a" stroke-width="1.5" fill="none"/><line x1="3" y1="8" x2="15" y2="8" stroke="#16a34a" stroke-width="1"/></svg>
+      </div>
+      <div class="equip-name">磷化滚镀线</div>
+      <div class="equip-desc">全自动磷化滚镀线1条，表面处理品质稳定</div>
+    </div>
+    <div class="equip-card fade-up d5">
+      <div class="equip-icon" style="background:#fce7f3">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#db2777" stroke-width="1.5" fill="none"/><circle cx="9" cy="9" r="2" stroke="#db2777" stroke-width="1.5" fill="none"/><line x1="9" y1="3" x2="9" y2="5" stroke="#db2777" stroke-width="1.5"/></svg>
+      </div>
+      <div class="equip-name">光学筛选机</div>
+      <div class="equip-desc">超过20台光学筛选设备，实现尺寸全检</div>
+    </div>
+    <div class="equip-card fade-up d6">
+      <div class="equip-icon" style="background:#ede9fe">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="8" width="14" height="6" rx="1" stroke="#7c3aed" stroke-width="1.5" fill="none"/><path d="M5 8V5a4 4 0 018 0v3" stroke="#7c3aed" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="equip-name">模具设备</div>
+      <div class="equip-desc">完善模具设备体系，满足客户各种非标定制需求</div>
+    </div>
+  </div>
+</div>
+
+<!-- 品质检测设备 -->
+<div class="section-header"><h2>品质检测设备</h2><span>QUALITY TESTING</span></div>
+<div class="card">
+  <div class="insp-card fade-up d1">
+    <div class="insp-header">
+      <div class="insp-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l1.5 3 3.5.5-2.5 2.5.6 3.5L9 9.5l-3.1 2 .6-3.5L4 5.5 7.5 5 9 2z" stroke="#2563eb" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div>
+        <div class="insp-label">材质分析</div>
+        <div class="insp-name">火花直读光谱仪</div>
+      </div>
+    </div>
+    <div class="insp-desc">精准检测金属材料化学成分，确保原材料符合标准要求，从源头把控品质。</div>
+  </div>
+  <div class="insp-card fade-up d2">
+    <div class="insp-header">
+      <div class="insp-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="10" rx="1" stroke="#2563eb" stroke-width="1.5" fill="none"/><circle cx="9" cy="7" r="2" stroke="#2563eb" stroke-width="1.5" fill="none"/><line x1="5" y1="14" x2="13" y2="14" stroke="#2563eb" stroke-width="1.5"/></svg>
+      </div>
+      <div>
+        <div class="insp-label">尺寸测量</div>
+        <div class="insp-name">光学影像测量仪</div>
+      </div>
+    </div>
+    <div class="insp-desc">高精度的光学影像测量系统，快速测量产品几何尺寸及形位公差。</div>
+  </div>
+  <div class="insp-card fade-up d3">
+    <div class="insp-header">
+      <div class="insp-icon" style="background:#dcfce7">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#16a34a" stroke-width="1.5" fill="none"/><path d="M6 9l2 2 4-4" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <div class="insp-label">硬度检测</div>
+        <div class="insp-name">洛氏/维氏硬度计</div>
+      </div>
+    </div>
+    <div class="insp-desc">洛氏硬度计和维氏硬度计，检测产品热处理后的硬度是否符合技术要求。</div>
+  </div>
+  <div class="insp-card fade-up d4">
+    <div class="insp-header">
+      <div class="insp-icon" style="background:#fef3c7">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="#d97706" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="9" r="3" stroke="#d97706" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div>
+        <div class="insp-label">力学测试</div>
+        <div class="insp-name">剪切力试验机 + 插拔力试验机</div>
+      </div>
+    </div>
+    <div class="insp-desc">测试产品承受剪切力和插拔力的能力，确保在实际应用中满足力学性能要求。</div>
+  </div>
+  <div class="insp-card fade-up d5">
+    <div class="insp-header">
+      <div class="insp-icon" style="background:#fce7f3">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#db2777" stroke-width="1.5" fill="none"/><path d="M6 9h6M9 6v6" stroke="#db2777" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <div class="insp-label">金相分析</div>
+        <div class="insp-name">金相显微观察仪 + 蔡司显微镜</div>
+      </div>
+    </div>
+    <div class="insp-desc">观察金属内部组织结构，分析热处理效果，评估材料冶金质量。</div>
+  </div>
+  <div class="insp-card fade-up d6">
+    <div class="insp-header">
+      <div class="insp-icon" style="background:#ede9fe">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 14c0 0 3-8 6-8s6 8 6 8" stroke="#7c3aed" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <div class="insp-label">表面粗糙度</div>
+        <div class="insp-name">粗糙度轮廓仪 + 圆度仪</div>
+      </div>
+    </div>
+    <div class="insp-desc">精确测量工件表面粗糙度和圆度，保证精密销类产品的表面质量。</div>
+  </div>
+  <div class="insp-card fade-up d7">
+    <div class="insp-header">
+      <div class="insp-icon">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 13c0-4 2.5-7 6-7s6 3 6 7" stroke="#2563eb" stroke-width="1.5" fill="none"/><path d="M2 16h14" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <div class="insp-label">耐蚀测试</div>
+        <div class="insp-name">盐雾试验机</div>
+      </div>
+    </div>
+    <div class="insp-desc">模拟盐雾腐蚀环境，测试产品表面处理（磷化/发黑/镀锌等）的耐蚀性能。</div>
+  </div>
+</div>
+
+<!-- 品质保证承诺 -->
+<div style="margin:0 16px 16px">
+  <div style="background:#1a1a1a;border-radius:12px;padding:16px">
+    <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:10px">品质全程追溯</div>
+    <div style="font-size:12px;color:#94a3b8;line-height:1.7">
+      每件产品均可通过扫描流程卡二维码，实时追溯生产过程——从原材料分切、冲压巡检、热处理测试，到入库发货前的最终检测，全程数据可查、质量可控。
+    </div>
+  </div>
+</div>
+
+<div class="bottom-placeholder"></div>
+</div>
+
+<!-- 底部固定栏 -->
+<div class="bottom-bar">
+  <div class="bottom-bar-tel" onclick="location.href='tel:400XXXXXXX'">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3.5 1.5c-.5 0-1 .3-1.2.8l-1 2.5c-.2.5 0 1 .3 1.3 0 0 1.2 1.2 2.2 2.5 1 1.3 2.2 3 2.2 3 .3.3.7.5 1.2.3l2.5-1c.5-.2.8-.7.8-1.2v-1.5c0-.5-.3-1-.8-1.2l-1-.5c-.5-.2-1 0-1.3.3l-.5.5c-.3-.2-.7-.5-1-.8-.3-.3-.6-.7-.8-1l.5-.5c.3-.3.5-.8.3-1.3l-.5-1c-.2-.5-.7-.8-1.2-.8h-1.5z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+    电话咨询
+  </div>
+  <div class="bottom-bar-contact" onclick="location.href='index.html'">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2" width="12" height="10" rx="1" stroke="white" stroke-width="1.2" fill="none"/><path d="M1 4l6 4 6-4" stroke="white" stroke-width="1.2" fill="none"/></svg>
+    在线询价
+  </div>
+</div>
+
+<script>
+function openMenu(){
+  document.getElementById('menuPanel').classList.add('active');
+  document.getElementById('menuOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeMenu(){
+  document.getElementById('menuPanel').classList.remove('active');
+  document.getElementById('menuOverlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+</script>
+</body>
+</html>
