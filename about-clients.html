@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>客户案例 | 派恩斯工业</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;background:#f1f5f9;font-family:'Microsoft YaHei',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+#app{width:100%;max-width:450px;margin:0 auto;background:#fff;min-height:100vh;position:relative;overflow:hidden}
+
+/* 导航栏 */
+.nav-bar{position:sticky;top:0;z-index:1000;width:100%;height:52px;background:#1a1a1a;display:flex;align-items:center;padding:0 16px;gap:12px}
+.nav-back{color:#94a3b8;font-size:20px;cursor:pointer;padding:4px}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-logo-icon{width:28px;height:28px;background:#2563eb;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff}
+.nav-logo-text{color:#fff;font-size:13px;font-weight:700}
+.nav-menu-btn{color:#94a3b8;font-size:20px;cursor:pointer;margin-left:auto;padding:8px}
+
+/* 页面标题 */
+.page-header{background:#1a1a1a;padding:20px 16px 24px}
+.page-eyebrow{font-size:10px;color:#64748b;letter-spacing:2px;font-family:Arial,sans-serif;margin-bottom:4px}
+.page-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:4px}
+.page-sub{font-size:12px;color:#94a3b8}
+
+/* 区块标题 */
+.section-header{display:flex;align-items:baseline;gap:8px;padding:20px 16px 12px}
+.section-header h2{font-size:16px;font-weight:700;color:#1a1a1a}
+.section-header span{font-size:10px;color:#94a3b8;letter-spacing:1px;font-family:Arial,sans-serif}
+
+/* 公司简介 */
+.company-intro{padding:0 16px 16px}
+.intro-banner{background:linear-gradient(135deg,#1a1a1a 0%,#334155 100%);border-radius:14px;padding:20px 16px;margin-bottom:16px;position:relative;overflow:hidden}
+.intro-banner::before{content:'';position:absolute;top:-20px;right:-20px;width:120px;height:120px;border:20px solid rgba(255,255,255,.03);border-radius:50%}
+.intro-label{font-size:10px;color:#94a3b8;letter-spacing:2px;margin-bottom:8px;font-family:Arial,sans-serif}
+.intro-title{font-size:18px;font-weight:800;color:#fff;margin-bottom:12px;line-height:1.3}
+.intro-text{font-size:12px;color:#cbd5e1;line-height:1.7}
+.intro-stats{display:flex;gap:16px;margin-top:16px}
+.intro-stat{text-align:center;flex:1}
+.intro-stat-num{font-size:22px;font-weight:800;color:#2563eb;font-family:Arial,sans-serif}
+.intro-stat-label{font-size:10px;color:#94a3b8;margin-top:2px}
+
+/* 客户logo墙 */
+.logo-wall{padding:0 16px 16px}
+.logo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.logo-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 2px 6px rgba(0,0,0,.04);transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.logo-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.logo-placeholder{width:48px;height:48px;border-radius:10px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#2563eb}
+.logo-name{font-size:11px;font-weight:700;color:#1a1a1a;text-align:center;line-height:1.2}
+.logo-field{font-size:10px;color:#94a3b8;text-align:center}
+
+/* 合作领域 */
+.field-strip{margin:0 16px 16px}
+.field-grid{display:flex;flex-wrap:wrap;gap:8px}
+.field-chip{background:#f8fafc;border:1px solid #e2e8f0;border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;color:#475569;transition:all .2s;cursor:default}
+.field-chip:hover{background:#2563eb;color:#fff;border-color:#2563eb}
+
+/* 合作承诺 */
+.promise-section{background:#eff6ff;margin:0 16px 16px;border-radius:12px;padding:16px}
+.promise-title{font-size:14px;font-weight:700;color:#1e3a8a;margin-bottom:12px}
+.promise-list{display:flex;flex-direction:column;gap:10px}
+.promise-item{display:flex;align-items:flex-start;gap:10px}
+.promise-icon{width:28px;height:28px;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.promise-text{font-size:12px;color:#475569;line-height:1.5;padding-top:4px}
+
+/* 苹果风动效 */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{opacity:0;animation:fadeUp .5s cubic-bezier(.4,0,.2,1) forwards}
+.d1{animation-delay:.06s}.d2{animation-delay:.12s}.d3{animation-delay:.18s}.d4{animation-delay:.24s}.d5{animation-delay:.30s}.d6{animation-delay:.36s}
+
+/* 底部占位 */
+.bottom-placeholder{height:56px}
+
+/* 侧边菜单 */
+.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1001;opacity:0;visibility:hidden;transition:opacity .3s}
+.menu-overlay.active{opacity:1;visibility:visible}
+.menu-panel{position:fixed;top:0;right:0;width:260px;height:100%;background:#1a1a1a;z-index:1002;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;padding:60px 0 20px}
+.menu-panel.active{transform:translateX(0)}
+.menu-close{position:absolute;top:14px;right:16px;color:#94a3b8;font-size:24px;cursor:pointer;line-height:1;padding:4px}
+.menu-item{color:#fff;font-size:15px;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer}
+.menu-item span{color:#2563eb;font-size:13px;margin-right:10px}
+
+/* 底部固定栏 */
+.bottom-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:450px;height:56px;background:#fff;border-top:1px solid #e2e8f0;display:flex;align-items:center;z-index:999}
+.bottom-bar-tel{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;height:40px;margin:8px 0 8px 12px;border:1.5px solid #2563eb;border-radius:10px;color:#2563eb;font-size:13px;font-weight:700;cursor:pointer}
+.bottom-bar-contact{flex:2;display:flex;align-items:center;justify-content:center;gap:4px;height:40px;margin:8px 12px 8px 8px;background:#ea580c;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- 导航栏 -->
+<nav class="nav-bar">
+  <a href="index.html" class="nav-back">&#8592;</a>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">P</div>
+    <div class="nav-logo-text">PINES 派恩斯</div>
+  </div>
+  <div class="nav-menu-btn" onclick="openMenu()">&#9776;</div>
+</nav>
+
+<!-- 侧边菜单 -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="menu-panel" id="menuPanel">
+  <div class="menu-close" onclick="closeMenu()">&#10005;</div>
+  <div class="menu-item" onclick="location.href='index.html'"><span>&#8962;</span>首页</div>
+  <div class="menu-item" onclick="location.href='category-pins.html'"><span>&#9733;</span>产品中心</div>
+  <div class="menu-item" onclick="location.href='about-cert.html'"><span>&#9878;</span>资质认证</div>
+  <div class="menu-item" onclick="location.href='about-production.html'"><span>&#9881;</span>生产实力</div>
+  <div class="menu-item" onclick="location.href='about-applications.html'"><span>&#9679;</span>应用案例</div>
+  <div class="menu-item" onclick="location.href='about-clients.html'"><span>&#9670;</span>客户案例</div>
+</div>
+
+<!-- 页面标题 -->
+<div class="page-header">
+  <div class="page-eyebrow">PINES INDUSTRIAL</div>
+  <div class="page-title">客户案例</div>
+  <div class="page-sub">覆盖全球 · 多领域深耕</div>
+</div>
+
+<!-- 公司简介横幅 -->
+<div class="company-intro">
+  <div class="intro-banner fade-up d1">
+    <div class="intro-label">ABOUT COMPANY</div>
+    <div class="intro-title">安徽派恩斯金属制品有限公司</div>
+    <div class="intro-text">
+      成立于2019年，注册资本1000万元，现有员工140余人，专业从事弹性销（弹性开口销、卷销、定位衬套）、实心销（圆柱销）类零件的研发、生产与销售，年产值超9000万元。
+    </div>
+    <div class="intro-stats">
+      <div class="intro-stat">
+        <div class="intro-stat-num">140+</div>
+        <div class="intro-stat-label">员工人数</div>
+      </div>
+      <div class="intro-stat">
+        <div class="intro-stat-num">9000<span style="font-size:12px">万</span></div>
+        <div class="intro-stat-label">年产值(元)</div>
+      </div>
+      <div class="intro-stat">
+        <div class="intro-stat-num">5000+</div>
+        <div class="intro-stat-label">在库SKU</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 合作领域 -->
+<div class="section-header"><h2>合作领域</h2><span>INDUSTRIES</span></div>
+<div class="field-strip">
+  <div class="field-grid">
+    <div class="field-chip fade-up d1">🚗 汽车制造</div>
+    <div class="field-chip fade-up d2">🌬️ 风力发电</div>
+    <div class="field-chip fade-up d3">🚜 工程机械</div>
+    <div class="field-chip fade-up d4">🔧 电动工具</div>
+    <div class="field-chip fade-up d5">🧲 家用电器</div>
+    <div class="field-chip fade-up d6">⚡ 新能源</div>
+  </div>
+</div>
+
+<!-- 客户 Logo 墙 -->
+<div class="section-header"><h2>客户品牌</h2><span>CLIENTS</span></div>
+<div class="logo-wall">
+  <div class="logo-grid">
+
+    <!-- 客户卡片占位 — 实际logo待老汤提供 -->
+    <div class="logo-card fade-up d1">
+      <div class="logo-placeholder">🚗</div>
+      <div class="logo-name">汽车客户 A</div>
+      <div class="logo-field">Tier 1 供应商</div>
+    </div>
+    <div class="logo-card fade-up d2">
+      <div class="logo-placeholder">🚗</div>
+      <div class="logo-name">汽车客户 B</div>
+      <div class="logo-field">汽车零部件</div>
+    </div>
+    <div class="logo-card fade-up d3">
+      <div class="logo-placeholder">🌬️</div>
+      <div class="logo-name">风电客户 A</div>
+      <div class="logo-field">风电整机</div>
+    </div>
+    <div class="logo-card fade-up d4">
+      <div class="logo-placeholder">🌬️</div>
+      <div class="logo-name">风电客户 B</div>
+      <div class="logo-field">风电配件</div>
+    </div>
+    <div class="logo-card fade-up d5">
+      <div class="logo-placeholder">🚜</div>
+      <div class="logo-name">工程机械客户</div>
+      <div class="logo-field">重型机械</div>
+    </div>
+    <div class="logo-card fade-up d6">
+      <div class="logo-placeholder">⚡</div>
+      <div class="logo-name">新能源客户</div>
+      <div class="logo-field">锂电/光伏</div>
+    </div>
+
+  </div>
+
+  <!-- Logo 墙说明 -->
+  <div style="margin-top:12px;text-align:center">
+    <div style="font-size:11px;color:#94a3b8;line-height:1.6">
+      客户 Logo 墙持续更新中。如需了解具体客户案例，欢迎与商务团队联系。
+    </div>
+  </div>
+</div>
+
+<!-- 合作承诺 -->
+<div class="section-header"><h2>合作承诺</h2><span>OUR COMMITMENT</span></div>
+<div class="promise-section">
+  <div class="promise-list">
+    <div class="promise-item">
+      <div class="promise-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#2563eb" stroke-width="1.3" fill="none"/><path d="M4.5 7l2 2 3-3" stroke="#2563eb" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+      <div class="promise-text">样品支持：提供标准品样品，最快当天寄出，批量订单前验证品质</div>
+    </div>
+    <div class="promise-item">
+      <div class="promise-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#2563eb" stroke-width="1.3" fill="none"/><path d="M4.5 7l2 2 3-3" stroke="#2563eb" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+      <div class="promise-text">快速响应：询价24小时内报价，紧急订单可协商加急生产</div>
+    </div>
+    <div class="promise-item">
+      <div class="promise-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#2563eb" stroke-width="1.3" fill="none"/><path d="M4.5 7l2 2 3-3" stroke="#2563eb" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+      <div class="promise-text">全程追溯：从原材料到成品的全流程质量追溯，每批产品可提供检测报告</div>
+    </div>
+    <div class="promise-item">
+      <div class="promise-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#2563eb" stroke-width="1.3" fill="none"/><path d="M4.5 7l2 2 3-3" stroke="#2563eb" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+      <div class="promise-text">非标定制：专业工程团队支持按图定制，最小起订量灵活，量产成本可控</div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-placeholder"></div>
+</div>
+
+<!-- 底部固定栏 -->
+<div class="bottom-bar">
+  <div class="bottom-bar-tel" onclick="location.href='tel:400XXXXXXX'">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3.5 1.5c-.5 0-1 .3-1.2.8l-1 2.5c-.2.5 0 1 .3 1.3 0 0 1.2 1.2 2.2 2.5 1 1.3 2.2 3 2.2 3 .3.3.7.5 1.2.3l2.5-1c.5-.2.8-.7.8-1.2v-1.5c0-.5-.3-1-.8-1.2l-1-.5c-.5-.2-1 0-1.3.3l-.5.5c-.3-.2-.7-.5-1-.8-.3-.3-.6-.7-.8-1l.5-.5c.3-.3.5-.8.3-1.3l-.5-1c-.2-.5-.7-.8-1.2-.8h-1.5z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+    电话咨询
+  </div>
+  <div class="bottom-bar-contact" onclick="location.href='index.html'">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2" width="12" height="10" rx="1" stroke="white" stroke-width="1.2" fill="none"/><path d="M1 4l6 4 6-4" stroke="white" stroke-width="1.2" fill="none"/></svg>
+    在线询价
+  </div>
+</div>
+
+<script>
+function openMenu(){
+  document.getElementById('menuPanel').classList.add('active');
+  document.getElementById('menuOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeMenu(){
+  document.getElementById('menuPanel').classList.remove('active');
+  document.getElementById('menuOverlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+</script>
+</body>
+</html>
