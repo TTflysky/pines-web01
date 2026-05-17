@@ -13,7 +13,15 @@
 .nav-logo-icon{width:32px;height:32px;background:#2563eb;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#fff}
 .nav-logo-text{color:#fff;font-size:14px;font-weight:700;letter-spacing:0.5px}
 .nav-logo-sub{color:#94a3b8;font-size:10px}
-.nav-menu-btn{color:#94a3b8;font-size:20px;cursor:pointer;line-height:1}
+.nav-menu-btn{color:#94a3b8;font-size:20px;cursor:pointer;line-height:1;user-select:none;-webkit-tap-highlight-color:transparent;padding:8px;margin-right:-8px}
+.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1001;opacity:0;visibility:hidden;transition:opacity .3s}
+.menu-overlay.active{opacity:1;visibility:visible}
+.menu-panel{position:fixed;top:0;right:0;width:260px;height:100%;background:#1a1a1a;z-index:1002;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;padding:60px 0 20px}
+.menu-panel.active{transform:translateX(0)}
+.menu-close{position:absolute;top:14px;right:16px;color:#94a3b8;font-size:24px;cursor:pointer;line-height:1;padding:4px;user-select:none;-webkit-tap-highlight-color:transparent}
+.menu-item{color:#fff;font-size:15px;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,0.06);cursor:pointer;transition:background .2s;user-select:none;-webkit-tap-highlight-color:transparent}
+.menu-item:active{background:rgba(255,255,255,0.1)}
+.menu-item span{color:#2563eb;font-size:13px;margin-right:10px}
 
 /* === Hero === */
 .hero-section{background:#1a1a1a;padding:28px 16px 20px;position:relative;overflow:hidden}
@@ -165,8 +173,19 @@
       <div class="nav-logo-sub">派恩斯工业</div>
     </div>
   </div>
-  <div class="nav-menu-btn">&#9776;</div>
+  <div class="nav-menu-btn" onclick="openMenu()">&#9776;</div>
 </nav>
+
+<!-- 侧边菜单 -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="menu-panel" id="menuPanel">
+  <div class="menu-close" onclick="closeMenu()">&#10005;</div>
+  <div class="menu-item" onclick="scrollToSection('top')"><span>&#8962;</span>首页</div>
+  <div class="menu-item" onclick="scrollToSection('products')"><span>&#9733;</span>产品中心</div>
+  <div class="menu-item" onclick="scrollToSection('advantages')"><span>&#9734;</span>核心优势</div>
+  <div class="menu-item" onclick="scrollToSection('about')"><span>&#9733;</span>关于派恩斯</div>
+  <div class="menu-item" onclick="openInquiryForm();closeMenu()"><span>&#9993;</span>立即咨询</div>
+</div>
 
 <!-- Hero -->
 <section class="hero-section">
@@ -206,7 +225,7 @@
 </div>
 
 <!-- 产品中心 -->
-<div class="section-header"><h2>产品中心</h2><span>PRODUCT CENTER</span></div>
+<div class="section-header" id="products"><h2>产品中心</h2><span>PRODUCT CENTER</span></div>
 <div class="category-grid">
   <div class="category-item cat-pins fade-up d1" onclick="location.href='category-pins.html'">
     <div class="cat-img-wrap"><img class="cat-img" src="images/cat-pins-ai.jpg" alt="销类" loading="lazy"></div>
@@ -254,7 +273,7 @@
 
 <!-- 核心优势 -->
 <div class="features-section">
-  <div class="section-header"><h2>核心优势</h2><span>WHY CHOOSE US</span></div>
+  <div class="section-header" id="advantages"><h2>核心优势</h2><span>WHY CHOOSE US</span></div>
   <div class="features-list">
     <div class="feature-card fade-up d1">
       <div class="feat-icon">
@@ -305,7 +324,7 @@
 
 <!-- 关于 -->
 <div class="company-section">
-  <div class="section-header"><h2>关于派恩斯</h2><span>ABOUT PINES</span></div>
+  <div class="section-header" id="about"><h2>关于派恩斯</h2><span>ABOUT PINES</span></div>
   <img class="company-img" src="images/about-factory-ai.jpg" alt="派恩斯工厂" loading="lazy">
   <p class="company-desc">派恩斯是一家专业从事金属紧固件研发与制造的企业，主要产品涵盖弹性销、直槽销、实心销、卡扣、垫片等标准件及非标定制件，广泛应用于汽车、机械、电子、航空等领域。</p>
   <div class="company-stats">
@@ -449,6 +468,23 @@ document.getElementById('btnPhone').addEventListener('click',function(){window.l
 document.getElementById('bottomPhone').addEventListener('click',function(){window.location.href='tel:'+phoneNumber;});
 document.getElementById('btnInquiry').addEventListener('click',openInquiryForm);
 document.getElementById('bottomInquiry').addEventListener('click',openInquiryForm);
+
+function openMenu(){
+  document.getElementById('menuPanel').classList.add('active');
+  document.getElementById('menuOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeMenu(){
+  document.getElementById('menuPanel').classList.remove('active');
+  document.getElementById('menuOverlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+function scrollToSection(id){
+  closeMenu();
+  if(id==='top'){window.scrollTo({top:0,behavior:'smooth'});return;}
+  var el=document.getElementById(id);
+  if(el){window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-52,behavior:'smooth'});}
+}
 </script>
 </body>
 </html>
