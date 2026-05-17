@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>资质认证 | 派恩斯工业</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;background:#f1f5f9;font-family:'Microsoft YaHei',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+#app{width:100%;max-width:450px;margin:0 auto;background:#fff;min-height:100vh;position:relative;overflow:hidden}
+
+/* 导航栏 */
+.nav-bar{position:sticky;top:0;z-index:1000;width:100%;height:52px;background:#1a1a1a;display:flex;align-items:center;padding:0 16px;gap:12px}
+.nav-back{color:#94a3b8;font-size:20px;cursor:pointer;padding:4px;user-select:none}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-logo-icon{width:28px;height:28px;background:#2563eb;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff}
+.nav-logo-text{color:#fff;font-size:13px;font-weight:700}
+.nav-menu-btn{color:#94a3b8;font-size:20px;cursor:pointer;margin-left:auto;padding:8px}
+
+/* 页面标题 */
+.page-header{background:#1a1a1a;padding:20px 16px 24px}
+.page-eyebrow{font-size:10px;color:#64748b;letter-spacing:2px;font-family:Arial,sans-serif;margin-bottom:4px}
+.page-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:4px}
+.page-sub{font-size:12px;color:#94a3b8}
+
+/* 区块标题 */
+.section-header{display:flex;align-items:baseline;gap:8px;padding:20px 16px 12px}
+.section-header h2{font-size:16px;font-weight:700;color:#1a1a1a}
+.section-header span{font-size:10px;color:#94a3b8;letter-spacing:1px;font-family:Arial,sans-serif}
+
+/* 通用卡片 */
+.card{padding:0 16px 16px}
+
+/* 认证卡片 */
+.cert-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.cert-card-inner{display:flex;align-items:stretch}
+.cert-icon-wrap{width:72px;background:#1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;flex-shrink:0;padding:16px 0}
+.cert-icon-text{font-size:10px;color:#94a3b8;font-weight:700;letter-spacing:1px;text-align:center;line-height:1.3}
+.cert-body{padding:16px;flex:1}
+.cert-name{font-size:15px;font-weight:800;color:#1a1a1a;margin-bottom:4px}
+.cert-sub{font-size:12px;color:#64748b;margin-bottom:8px}
+.cert-year{font-size:11px;font-weight:700;color:#2563eb;background:#eff6ff;padding:3px 8px;border-radius:4px;display:inline-block}
+.cert-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.cert-tag{font-size:11px;color:#475569;background:#f1f5f9;padding:3px 8px;border-radius:4px}
+
+/* 质量方针 */
+.policy-section{background:#1a1a1a;padding:24px 16px;margin-top:8px}
+.policy-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:16px;text-align:center}
+.policy-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.policy-item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 12px;text-align:center}
+.policy-num{font-size:10px;color:#2563eb;font-weight:700;margin-bottom:4px;letter-spacing:1px}
+.policy-text{font-size:13px;color:#fff;font-weight:700}
+
+/* 专利/商标 */
+.patent-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:20px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.patent-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.patent-icon{width:40px;height:40px;background:#eff6ff;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.patent-label{font-size:10px;color:#94a3b8;letter-spacing:1px}
+.patent-title{font-size:15px;font-weight:700;color:#1a1a1a}
+.patent-desc{font-size:13px;color:#64748b;line-height:1.6}
+.patent-note{font-size:11px;color:#94a3b8;margin-top:8px;font-style:italic}
+
+/* 苹果风动效 */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{opacity:0;animation:fadeUp .5s cubic-bezier(.4,0,.2,1) forwards}
+.d1{animation-delay:.06s}.d2{animation-delay:.12s}.d3{animation-delay:.18s}.d4{animation-delay:.24s}.d5{animation-delay:.30s}
+
+/* 底部占位 */
+.bottom-placeholder{height:56px}
+
+/* 侧边菜单 */
+.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1001;opacity:0;visibility:hidden;transition:opacity .3s}
+.menu-overlay.active{opacity:1;visibility:visible}
+.menu-panel{position:fixed;top:0;right:0;width:260px;height:100%;background:#1a1a1a;z-index:1002;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;padding:60px 0 20px}
+.menu-panel.active{transform:translateX(0)}
+.menu-close{position:absolute;top:14px;right:16px;color:#94a3b8;font-size:24px;cursor:pointer;line-height:1;padding:4px;user-select:none}
+.menu-item{color:#fff;font-size:15px;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;transition:background .2s}
+.menu-item span{color:#2563eb;font-size:13px;margin-right:10px}
+
+/* 底部固定栏 */
+.bottom-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:450px;height:56px;background:#fff;border-top:1px solid #e2e8f0;display:flex;align-items:center;z-index:999}
+.bottom-bar-tel{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;height:40px;margin:8px 0 8px 12px;border:1.5px solid #2563eb;border-radius:10px;color:#2563eb;font-size:13px;font-weight:700;cursor:pointer}
+.bottom-bar-contact{flex:2;display:flex;align-items:center;justify-content:center;gap:4px;height:40px;margin:8px 12px 8px 8px;background:#ea580c;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- 导航栏 -->
+<nav class="nav-bar">
+  <a href="index.html" class="nav-back">&#8592;</a>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">P</div>
+    <div class="nav-logo-text">PINES 派恩斯</div>
+  </div>
+  <div class="nav-menu-btn" onclick="openMenu()">&#9776;</div>
+</nav>
+
+<!-- 侧边菜单 -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="menu-panel" id="menuPanel">
+  <div class="menu-close" onclick="closeMenu()">&#10005;</div>
+  <div class="menu-item" onclick="location.href='index.html'"><span>&#8962;</span>首页</div>
+  <div class="menu-item" onclick="location.href='category-pins.html'"><span>&#9733;</span>产品中心</div>
+  <div class="menu-item" onclick="location.href='about-cert.html'"><span>&#9878;</span>资质认证</div>
+  <div class="menu-item" onclick="location.href='about-production.html'"><span>&#9881;</span>生产实力</div>
+  <div class="menu-item" onclick="location.href='about-applications.html'"><span>&#9679;</span>应用案例</div>
+  <div class="menu-item" onclick="location.href='about-clients.html'"><span>&#9670;</span>客户案例</div>
+</div>
+
+<!-- 页面标题 -->
+<div class="page-header">
+  <div class="page-eyebrow">PINES INDUSTRIAL</div>
+  <div class="page-title">资质认证</div>
+  <div class="page-sub">体系认证 · 发明专利 · 自主商标</div>
+</div>
+
+<!-- 体系认证 -->
+<div class="section-header"><h2>体系认证</h2><span>CERTIFICATIONS</span></div>
+<div class="card">
+
+  <!-- IATF 16949 -->
+  <div class="cert-card fade-up d1">
+    <div class="cert-card-inner">
+      <div class="cert-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M14 3l2.5 5 5.5.8-4 3.9.9 5.3L14 15.5l-4.9 2.5.9-5.3-4-3.9 5.5-.8L14 3z" stroke="#2563eb" stroke-width="1.5" fill="none"/>
+          <circle cx="14" cy="14" r="10" stroke="#2563eb" stroke-width="1" fill="none" stroke-dasharray="3 2"/>
+        </svg>
+        <div class="cert-icon-text">IATF<br>16949</div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-name">IATF 16949:2016</div>
+        <div class="cert-sub">汽车行业质量管理体系认证</div>
+        <span class="cert-year">2022年通过</span>
+        <div class="cert-tags">
+          <span class="cert-tag">国际汽车工作组</span>
+          <span class="cert-tag">汽车供应链</span>
+          <span class="cert-tag">过程管控</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ISO 14001 -->
+  <div class="cert-card fade-up d2">
+    <div class="cert-card-inner">
+      <div class="cert-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="10" stroke="#16a34a" stroke-width="1.5" fill="none"/>
+          <path d="M14 8c0 0-4 3-4 7s4 5 4 5 4-1 4-5-4-7-4-7z" stroke="#16a34a" stroke-width="1.5" fill="none"/>
+          <line x1="14" y1="18" x2="14" y2="22" stroke="#16a34a" stroke-width="1.5"/>
+        </svg>
+        <div class="cert-icon-text">ISO<br>14001</div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-name">ISO 14001:2015</div>
+        <div class="cert-sub">环境管理体系认证</div>
+        <span class="cert-year">2024年通过</span>
+        <div class="cert-tags">
+          <span class="cert-tag">环境保护</span>
+          <span class="cert-tag">绿色制造</span>
+          <span class="cert-tag">可持续发展</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 质量方针 -->
+<div class="policy-section">
+  <div class="policy-title">质量方针 QUALITY POLICY</div>
+  <div class="policy-grid">
+    <div class="policy-item fade-up d1">
+      <div class="policy-num">01</div>
+      <div class="policy-text">创新引领发展</div>
+    </div>
+    <div class="policy-item fade-up d2">
+      <div class="policy-num">02</div>
+      <div class="policy-text">追求卓越品质</div>
+    </div>
+    <div class="policy-item fade-up d3">
+      <div class="policy-num">03</div>
+      <div class="policy-text">超越顾客期望</div>
+    </div>
+    <div class="policy-item fade-up d4">
+      <div class="policy-num">04</div>
+      <div class="policy-text">提升公司品牌</div>
+    </div>
+  </div>
+</div>
+
+<!-- 发明专利 -->
+<div class="section-header"><h2>发明专利</h2><span>PATENTS</span></div>
+<div class="card">
+  <div class="patent-card fade-up d1">
+    <div class="patent-header">
+      <div class="patent-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 2l2 5h5l-4 3 1.5 5L10 12.5 5.5 15l1.5-5-4-3h5l2-5z" stroke="#2563eb" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div>
+        <div class="patent-label">国家发明专利</div>
+        <div class="patent-title">多项核心制造技术专利</div>
+      </div>
+    </div>
+    <div class="patent-desc">公司持续投入研发，在弹性销、实心销的制造工艺、热处理技术、表面处理工艺等方面积累了多项发明专利与实用新型专利，构建完整的技术护城河。</div>
+    <div class="patent-note">* 具体专利信息请与商务团队联系获取</div>
+  </div>
+</div>
+
+<!-- 自主商标 -->
+<div class="section-header"><h2>自主商标</h2><span>TRADEMARKS</span></div>
+<div class="card">
+  <div class="patent-card fade-up d1">
+    <div class="patent-header">
+      <div class="patent-icon" style="background:#fef3c7">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 2C6.1 2 3 5.1 3 9c0 3.9 3.1 9 7 9s7-5.1 7-9c0-3.9-3.1-7-7-7z" stroke="#d97706" stroke-width="1.5" fill="none"/>
+          <path d="M10 2c1 2 1 4 0 7-1-3-1-5 0-7z" stroke="#d97706" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div>
+        <div class="patent-label">注册商标</div>
+        <div class="patent-title">PINES 派恩斯</div>
+      </div>
+    </div>
+    <div class="patent-desc">公司持有自主注册的 "PINES" 图形商标及"派恩斯"文字商标，涵盖金属紧固件、销类零部件等多个商品类别，品牌资产受国家法律保护。</div>
+  </div>
+</div>
+
+<!-- 认证说明 -->
+<div style="padding:0 16px 16px">
+  <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;font-size:12px;color:#64748b;line-height:1.6">
+    以上认证证书均可在相关发证机构官网查询验证。如需索取证书原件或电子扫描件，欢迎与我们的商务团队联系。
+  </div>
+</div>
+
+<div class="bottom-placeholder"></div>
+</div>
+
+<!-- 底部固定栏 -->
+<div class="bottom-bar">
+  <div class="bottom-bar-tel" onclick="location.href='tel:400XXXXXXX'">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3.5 1.5c-.5 0-1 .3-1.2.8l-1 2.5c-.2.5 0 1 .3 1.3 0 0 1.2 1.2 2.2 2.5 1 1.3 2.2 3 2.2 3 .3.3.7.5 1.2.3l2.5-1c.5-.2.8-.7.8-1.2v-1.5c0-.5-.3-1-.8-1.2l-1-.5c-.5-.2-1 0-1.3.3l-.5.5c-.3-.2-.7-.5-1-.8-.3-.3-.6-.7-.8-1l.5-.5c.3-.3.5-.8.3-1.3l-.5-1c-.2-.5-.7-.8-1.2-.8h-1.5z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+    电话咨询
+  </div>
+  <div class="bottom-bar-contact" onclick="location.href='index.html#inquiry'">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2" width="12" height="10" rx="1" stroke="white" stroke-width="1.2" fill="none"/><path d="M1 4l6 4 6-4" stroke="white" stroke-width="1.2" fill="none"/></svg>
+    在线询价
+  </div>
+</div>
+
+<script>
+function openMenu(){
+  document.getElementById('menuPanel').classList.add('active');
+  document.getElementById('menuOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeMenu(){
+  document.getElementById('menuPanel').classList.remove('active');
+  document.getElementById('menuOverlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+</script>
+</body>
+</html>
