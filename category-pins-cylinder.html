@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>圆柱销 - 派恩斯工业紧固件</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      background: #f5f5f5;
+      font-family: 'Microsoft YaHei', Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 450px;
+      margin: 0 auto;
+      background: #fff;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 导航栏 */
+    .nav-bar {
+      position: sticky; top: 0; z-index: 1000;
+      width: 100%; height: 50px;
+      background: #1e5bb5;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .nav-back {
+      color: #fff; font-size: 14px; font-weight: 600; cursor: pointer;
+      text-decoration: none; display: flex; align-items: center; gap: 4px;
+    }
+    .nav-back:active { opacity: 0.7; }
+    .nav-logo { display: flex; align-items: center; gap: 8px; }
+    .nav-logo-icon {
+      width: 32px; height: 32px; background: #fff;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 900; color: #1e5bb5; letter-spacing: -1px;
+    }
+    .nav-logo-text { color: #fff; font-size: 16px; font-weight: 700; letter-spacing: 1px; }
+    .nav-menu-btn { color: #fff; font-size: 22px; cursor: pointer; line-height: 1; }
+    .nav-title { color: #fff; font-size: 15px; font-weight: 700; }
+
+    /* 品类Hero */
+    .cat-hero {
+      background: linear-gradient(135deg, #1e5bb5 0%, #0d2f6b 100%);
+      padding: 20px 16px;
+      position: relative; overflow: hidden;
+    }
+    .cat-hero::after {
+      content: '';
+      position: absolute; top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      background: rgba(255,255,255,0.05); border-radius: 50%;
+    }
+    .cat-hero-name { font-size: 24px; font-weight: 900; color: #fff; margin-bottom: 4px; position: relative; z-index: 1; }
+    .cat-hero-en { font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 8px; position: relative; z-index: 1; }
+    .cat-hero-desc { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.8; position: relative; z-index: 1; }
+    .cat-hero-count {
+      display: inline-block; background: rgba(255,255,255,0.15);
+      color: #fff; font-size: 11px; padding: 3px 10px; border-radius: 10px;
+      margin-top: 10px; position: relative; z-index: 1;
+    }
+
+    /* 搜索框 */
+    .search-bar {
+      padding: 12px 16px;
+      background: #f8f9fb;
+      border-bottom: 1px solid #eee;
+      position: sticky; top: 50px; z-index: 999;
+    }
+    .search-input-wrap {
+      display: flex; align-items: center;
+      background: #fff; border: 1.5px solid #e2e8f0;
+      border-radius: 10px; padding: 0 12px;
+      height: 42px;
+    }
+    .search-input-wrap:focus-within { border-color: #1e5bb5; }
+    .search-icon { font-size: 16px; color: #999; margin-right: 8px; }
+    .search-input {
+      flex: 1; border: none; outline: none;
+      font-size: 14px; color: #333;
+      background: transparent;
+    }
+    .search-input::placeholder { color: #bbb; }
+    .search-clear {
+      font-size: 14px; color: #ccc; cursor: pointer;
+      padding: 4px; display: none;
+    }
+    .search-clear.show { display: block; }
+    .search-count {
+      font-size: 12px; color: #888; text-align: center;
+      padding: 6px 0 0;
+    }
+    .no-result {
+      text-align: center; padding: 40px 16px; color: #999;
+      font-size: 14px; display: none;
+    }
+    .no-result.show { display: block; }
+
+    /* 产品卡片 */
+    .product-card {
+      background: #fff; margin: 8px 16px; border-radius: 12px;
+      box-shadow: 4px 4px 12px rgba(0,0,0,.3);
+      overflow: hidden; cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .product-card:hover { transform:translateY(-1px); box-shadow: 6px 6px 18px rgba(0,0,0,.35); }
+    .product-card:active { transform:scale(.97); }
+    .product-card-header { padding: 16px 16px 0; }
+    .product-name { font-size: 18px; font-weight: 700; color: #222; margin-bottom: 2px; }
+    .product-name-en { font-size: 12px; color: #999; margin-bottom: 12px; }
+
+    /* 折叠内容 */
+    .product-card-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease-out, opacity .25s;
+      opacity: 0;
+    }
+    .product-card.expanded .product-card-body {
+      max-height: 1200px; opacity: 1;
+      transition: max-height .4s ease-in, opacity .25s .05s;
+    }
+    .expand-hint {
+      text-align: center; font-size: 11px; color: #1e5bb5;
+      padding: 0 16px 10px; font-weight: 500;
+      opacity: .7;
+    }
+    .product-card.expanded .expand-hint { display: none; }
+    .expand-arrow {
+      display: inline-block; margin-left: 4px;
+      transition: transform .3s;
+    }
+    .product-card.expanded .expand-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* 产品图 */
+    .product-img {
+      margin: 0 16px 12px;
+      width: calc(100% - 32px);
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+      background: #f5f5f5;
+    }
+    .photo-placeholder {
+      margin: 0 16px 12px; height: 0; padding-bottom: 60%;
+      background: #f5f5f5; border: 2px dashed #ddd; border-radius: 8px;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .photo-placeholder-inner {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px;
+    }
+    .photo-placeholder .ph-icon { opacity: 0.3; }
+    .photo-placeholder .ph-text { font-size: 13px; color: #aaa; font-weight: 500; }
+    .photo-placeholder .ph-hint { font-size: 10px; color: #ccc; }
+
+    /* 信息卡片行 */
+    .info-cards { display: flex; gap: 8px; padding: 0 16px; margin-bottom: 12px; }
+    .info-card {
+      flex: 1; background: #f8f9fb; border-radius: 8px;
+      padding: 10px 8px; text-align: center;
+    }
+    .info-card .ic-label { font-size: 10px; color: #999; margin-bottom: 4px; }
+    .info-card .ic-value { font-size: 12px; color: #333; font-weight: 600; line-height: 1.4; }
+
+    /* 规格表 */
+    .spec-section { padding: 0 16px 16px; }
+    .spec-title { font-size: 13px; font-weight: 700; color: #1e5bb5; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .spec-title::before { content: ''; display: block; width: 3px; height: 14px; background: #1e5bb5; border-radius: 2px; }
+    .spec-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+    .spec-table td { padding: 7px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+    .spec-table td:first-child { color: #888; width: 80px; white-space: nowrap; }
+    .spec-table td:last-child { color: #333; font-weight: 500; }
+
+    /* 描述 */
+    .product-desc {
+      margin: 0 16px 14px; padding: 12px; background: #f8f9fb;
+      border-radius: 8px; font-size: 13px; color: #666; line-height: 1.8;
+    }
+
+    /* 询价按钮 */
+    .inquiry-btn {
+      display: block; width: calc(100% - 32px); margin: 0 16px 16px;
+      height: 44px; border: none; border-radius: 22px;
+      background: linear-gradient(135deg, #1e5bb5, #0d2f6b);
+      color: #fff; font-size: 14px; font-weight: 700; cursor: pointer;
+    }
+    .inquiry-btn:active { opacity: 0.85; }
+
+    /* 产品分隔 */
+    .product-divider { height: 8px; background: #f0f0f0; }
+
+    /* 定制流程 */
+    .custom-flow {
+      margin: 0 16px 16px;
+      display: flex; gap: 8px;
+    }
+    .flow-step {
+      flex: 1; text-align: center;
+    }
+    .flow-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #1e5bb5; color: #fff;
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 6px;
+    }
+    .flow-label { font-size: 11px; color: #555; font-weight: 600; }
+    .flow-arrow {
+      display: flex; align-items: center; color: #ccc; font-size: 16px;
+    }
+
+    /* Footer */
+    .footer { background: #1a1a1a; padding: 20px 16px 30px; margin-top: 8px; }
+    .footer-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+    .footer-logo-icon {
+      width: 36px; height: 36px; background: #1e5bb5; border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 900; color: #fff;
+    }
+    .footer-logo-text { color: #fff; font-size: 16px; font-weight: 700; }
+    .footer-logo-sub { color: #888; font-size: 11px; }
+    .footer-contact { margin-bottom: 14px; }
+    .footer-contact-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #2a2a2a; }
+    .footer-contact-item:last-child { border-bottom: none; }
+    .footer-contact-item .fc-icon { font-size: 14px; flex-shrink: 0; }
+    .footer-contact-item .fc-text { font-size: 12px; color: #bbb; flex: 1; }
+    .footer-contact-item .fc-value { font-size: 12px; color: #fff; font-weight: 600; }
+    .footer-copyright { font-size: 10px; color: #555; text-align: center; margin-top: 14px; line-height: 1.8; }
+
+    /* 弹窗 */
+    .modal-overlay { position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:2000;display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s; }
+    .modal-overlay.active { opacity:1;visibility:visible; }
+    .modal-sheet { width:100%;max-width:450px;max-height:85vh;background:#fff;border-radius:16px 16px 0 0;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1); }
+    .modal-overlay.active .modal-sheet { transform:translateY(0); }
+    .modal-handle { width:36px;height:4px;background:#ddd;border-radius:2px;margin:12px auto 8px; }
+    .modal-header { display:flex;align-items:center;justify-content:space-between;padding:8px 16px 12px;border-bottom:1px solid #f0f0f0;position:sticky;top:0;background:#fff;z-index:1; }
+    .modal-header h3 { font-size:16px;font-weight:700;color:#1e5bb5; }
+    .modal-close { width:32px;height:32px;border:none;background:#f5f5f5;border-radius:50%;font-size:18px;color:#666;cursor:pointer;display:flex;align-items:center;justify-content:center; }
+    .modal-body { padding:16px; }
+    .form-group { margin-bottom:14px; }
+    .form-label { display:block;font-size:13px;color:#555;font-weight:600;margin-bottom:6px; }
+    .form-label .required { color:#e53e3e;margin-left:2px; }
+    .form-input,.form-textarea { width:100%;padding:10px 12px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:14px;color:#333;outline:none;transition:border-color .2s;font-family:inherit; }
+    .form-input:focus,.form-textarea:focus { border-color:#1e5bb5; }
+    .form-textarea { min-height:80px;resize:vertical; }
+    .form-submit { width:100%;height:46px;border:none;border-radius:23px;background:linear-gradient(135deg,#1e5bb5,#0d2f6b);color:#fff;font-size:15px;font-weight:700;cursor:pointer; }
+    .form-success { text-align:center;padding:30px 16px;display:none; }
+    .form-success.show { display:block; }
+    .form-success .success-icon { font-size:48px;margin-bottom:12px; }
+    .form-success .success-text { font-size:15px;color:#333;font-weight:600;margin-bottom:6px; }
+    .form-success .success-sub { font-size:12px;color:#888; }
+
+    .bottom-placeholder { height: 20px; }
+  </style></head>
+<body>
+<div id="app">
+<nav class="nav-bar"><a class="nav-back" href="category-pins.html">← 返回销类</a><span class="nav-title">圆柱销 · Cylinder Pins</span></nav>
+<div class="cat-hero"><div class="cat-hero-name">圆柱销</div><div class="cat-hero-en">Cylinder Pins</div><div class="cat-hero-desc">实心圆柱结构，高精度定位，适用于模具、工装及精密机械装配。</div><span class="cat-hero-count">共 3 款产品</span></div>
+<div class="search-bar"><div class="search-input-wrap"><span class="search-icon">🔍</span><input type="text" class="search-input" id="searchInput" placeholder="搜索产品名称..."><span class="search-clear" id="searchClear">✕</span></div><div class="search-count" id="searchCount"></div><div class="no-result" id="noResult">未找到匹配的产品</div></div>
+<div class="product-divider"></div><div class="product-card" data-name="内螺纹圆柱销 zylinderstifte mit innengewinde" onclick="toggleCard(this)"><div class="product-card-header"><div class="product-name">内螺纹圆柱销</div><div class="product-name-en">Zylinderstifte mit Innengewinde</div></div><div class="expand-hint">点击查看详情 <span class="expand-arrow">▼</span></div><div class="product-card-body" onclick="event.stopPropagation()"><img class="product-img" src="images/pins-1.jpg" alt="内螺纹圆柱销"><div class="info-cards"><div class="info-card"><div class="ic-label">执行标准</div><div class="ic-value">DIN 7979 / ISO 8733</div></div><div class="info-card"><div class="ic-label">材质</div><div class="ic-value">碳钢 / 不锈钢</div></div><div class="info-card"><div class="ic-label">特点</div><div class="ic-value">带内螺纹便于拆装</div></div></div><div class="spec-section"><div class="spec-title">技术参数</div><table class="spec-table"><tr><td>执行标准</td><td>DIN 7979 / ISO 8733</td></tr><tr><td>材质</td><td>碳钢 / 不锈钢304 / 316</td></tr><tr><td>公差等级</td><td>m6 / h6</td></tr><tr><td>表面处理</td><td>发黑 / 镀锌 / 本色</td></tr></table></div><div class="product-desc">内螺纹圆柱销，端部带内螺纹设计，便于安装拆卸与维护更换。适用于精密模具、工装夹具及机械装配中的定位与固定连接。</div><button class="inquiry-btn" onclick="openInquiry('内螺纹圆柱销')">📋 对该产品询价</button></div></div><div class="product-divider"></div><div class="product-card" data-name="不锈钢圆柱销 stainless steel dowel pins" onclick="toggleCard(this)"><div class="product-card-header"><div class="product-name">不锈钢圆柱销</div><div class="product-name-en">Stainless Steel Dowel Pins</div></div><div class="expand-hint">点击查看详情 <span class="expand-arrow">▼</span></div><div class="product-card-body" onclick="event.stopPropagation()"><img class="product-img" src="images/pins-6.jpg" alt="不锈钢圆柱销"><div class="info-cards"><div class="info-card"><div class="ic-label">标准</div><div class="ic-value">DIN 6325 / ISO 2338</div></div><div class="info-card"><div class="ic-label">材质</div><div class="ic-value">不锈钢304/316</div></div><div class="info-card"><div class="ic-label">特点</div><div class="ic-value">实心 高精度 耐腐蚀</div></div></div><div class="spec-section"><div class="spec-title">技术参数</div><table class="spec-table"><tr><td>执行标准</td><td>DIN 6325 / ISO 2338</td></tr><tr><td>材质</td><td>不锈钢304 / 316 / A4</td></tr><tr><td>公差</td><td>m6 / h8</td></tr><tr><td>表面</td><td>本色抛光</td></tr></table></div><div class="product-desc">不锈钢圆柱销实心整体结构，精度高、耐腐蚀。用于精密定位与永久性固定连接，适用于潮湿、腐蚀环境下的模具、设备装配。</div><button class="inquiry-btn" onclick="openInquiry('不锈钢圆柱销')">📋 对该产品询价</button></div></div><div class="product-divider"></div><div class="product-card" data-name="公制圆柱销 metric dowel pins" onclick="toggleCard(this)"><div class="product-card-header"><div class="product-name">公制圆柱销</div><div class="product-name-en">Metric Dowel Pins</div></div><div class="expand-hint">点击查看详情 <span class="expand-arrow">▼</span></div><div class="product-card-body" onclick="event.stopPropagation()"><img class="product-img" src="images/pins-7.jpg" alt="公制圆柱销"><div class="info-cards"><div class="info-card"><div class="ic-label">国标</div><div class="ic-value">GB/T 119.1/.2</div></div><div class="info-card"><div class="ic-label">范围</div><div class="ic-value">0.6~50mm</div></div><div class="info-card"><div class="ic-label">用途</div><div class="ic-value">定位 连接 承剪</div></div></div><div class="spec-section"><div class="spec-title">技术参数</div><table class="spec-table"><tr><td>执行标准</td><td>GB/T 119.1 / GB/T 119.2</td></tr><tr><td>直径范围</td><td>0.6 ~ 50mm</td></tr><tr><td>材质</td><td>碳钢 / 不锈钢</td></tr><tr><td>公差</td><td>m6 / h8</td></tr></table></div><div class="product-desc">公制圆柱销按 GB/T 119.1/119.2 标准制造，用于零件间的精确位置保持与传递剪切载荷。是机械装配中最常用的定位元件之一。</div><button class="inquiry-btn" onclick="openInquiry('公制圆柱销')">📋 对该产品询价</button></div></div><div class="footer"><div class="footer-logo"><div class="footer-logo-icon">P</div><div><div class="footer-logo-text">派恩斯工业 · PINES</div><div class="footer-logo-sub">Professional Industrial Fasteners</div></div></div><div class="footer-contact"><div class="footer-contact-item"><span class="fc-icon">📞</span><span class="fc-text">全国服务热线</span><span class="fc-value">400-XXX-XXXX</span></div><div class="footer-contact-item"><span class="fc-icon">✉️</span><span class="fc-text">商务邮箱</span><span class="fc-value">sales@pines.com</span></div><div class="footer-contact-item"><span class="fc-icon">📍</span><span class="fc-text">工厂地址</span><span class="fc-value">中国制造</span></div><div class="footer-contact-item"><span class="fc-icon">⏰</span><span class="fc-text">工作时间</span><span class="fc-value">周一至周六 8:00-18:00</span></div></div><div class="footer-copyright">Copyright © 2026 派恩斯工业紧固件<br>专业制造 品质保障 服务至上</div></div><div class="bottom-placeholder"></div>
+</div><!-- #app -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-sheet" id="modalSheet">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <h3 id="modalTitle">在线询价</h3>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div><script>
+var modalOverlay = document.getElementById('modalOverlay');
+var modalBody = document.getElementById('modalBody');
+var modalTitle = document.getElementById('modalTitle');
+var modalClose = document.getElementById('modalClose');
+
+function openInquiry(productName) {
+  modalTitle.textContent = '在线询价 - ' + productName;
+  modalBody.innerHTML =
+    '<div class="form-group"><label class="form-label">询价产品</label><input class="form-input" id="inqProduct" value="' + productName + '" readonly></div>' +
+    '<div class="form-group"><label class="form-label">公司名称 <span class="required">*</span></label><input class="form-input" id="inqCompany" placeholder="请输入公司名称"></div>' +
+    '<div class="form-group"><label class="form-label">需求数量</label><input class="form-input" id="inqQty" placeholder="例：10000件/月"></div>' +
+    '<div class="form-group"><label class="form-label">需求描述 <span class="required">*</span></label><textarea class="form-textarea" id="inqDesc" placeholder="请描述规格、材质、用途等需求"></textarea></div>' +
+    '<div class="form-group"><label class="form-label">联系人 <span class="required">*</span></label><input class="form-input" id="inqContact" placeholder="姓名"></div>' +
+    '<div class="form-group"><label class="form-label">联系电话 <span class="required">*</span></label><input class="form-input" id="inqPhone" placeholder="手机号或座机" type="tel"></div>' +
+    '<button class="form-submit" onclick="submitInquiry()">提交询价</button>' +
+    '<div class="form-success" id="formSuccess"><div class="success-icon">✅</div><div class="success-text">询价已提交！</div><div class="success-sub">我们将在1个工作日内与您联系</div></div>';
+  modalOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function openInquiryForm() {
+  modalTitle.textContent = '在线询价';
+  modalBody.innerHTML =
+    '<div class="form-group"><label class="form-label">感兴趣的产品</label><input class="form-input" id="inqProduct" placeholder="如：弹性销、螺母..."></div>' +
+    '<div class="form-group"><label class="form-label">公司名称 <span class="required">*</span></label><input class="form-input" id="inqCompany" placeholder="请输入公司名称"></div>' +
+    '<div class="form-group"><label class="form-label">需求数量</label><input class="form-input" id="inqQty" placeholder="例：10000件/月"></div>' +
+    '<div class="form-group"><label class="form-label">需求描述 <span class="required">*</span></label><textarea class="form-textarea" id="inqDesc" placeholder="请描述规格、材质、用途等需求"></textarea></div>' +
+    '<div class="form-group"><label class="form-label">联系人 <span class="required">*</span></label><input class="form-input" id="inqContact" placeholder="姓名"></div>' +
+    '<div class="form-group"><label class="form-label">联系电话 <span class="required">*</span></label><input class="form-input" id="inqPhone" placeholder="手机号或座机" type="tel"></div>' +
+    '<button class="form-submit" onclick="submitInquiry()">提交询价</button>' +
+    '<div class="form-success" id="formSuccess"><div class="success-icon">✅</div><div class="success-text">询价已提交！</div><div class="success-sub">我们将在1个工作日内与您联系</div></div>';
+  modalOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function submitInquiry() {
+  var company = document.getElementById('inqCompany').value.trim();
+  var qty = document.getElementById('inqQty') ? document.getElementById('inqQty').value.trim() : '';
+  var desc = document.getElementById('inqDesc').value.trim();
+  var contact = document.getElementById('inqContact').value.trim();
+  var phone = document.getElementById('inqPhone').value.trim();
+  var product = document.getElementById('inqProduct') ? document.getElementById('inqProduct').value.trim() : '';
+  if (!company) { alert('请填写公司名称'); return; }
+  if (!desc) { alert('请填写需求描述'); return; }
+  if (!contact) { alert('请填写联系人'); return; }
+  if (!phone) { alert('请填写联系电话'); return; }
+
+  // 保存到 localStorage
+  var inquiries = JSON.parse(localStorage.getItem('pines_inquiries') || '[]');
+  inquiries.unshift({
+    id: Date.now(),
+    product: product,
+    company: company,
+    qty: qty,
+    desc: desc,
+    contact: contact,
+    phone: phone,
+    time: new Date().toLocaleString('zh-CN')
+  });
+  localStorage.setItem('pines_inquiries', JSON.stringify(inquiries));
+
+  document.getElementById('formSuccess').classList.add('show');
+  var btns = modalBody.querySelectorAll('.form-submit');
+  if (btns.length) btns[btns.length-1].style.display = 'none';
+  var groups = modalBody.querySelectorAll('.form-group');
+  groups.forEach(function(g) { g.style.display = 'none'; });
+}
+
+function closeModal() {
+  modalOverlay.classList.remove('active');
+  document.body.style.overflow = '';
+  var fs = document.getElementById('formSuccess');
+  if (fs) fs.classList.remove('show');
+}
+
+modalClose.addEventListener('click', closeModal);
+modalOverlay.addEventListener('click', function(e) {
+  if (e.target === modalOverlay) closeModal();
+});
+
+// ===== 产品卡片折叠 =====
+function toggleCard(card) {
+  var wasExpanded = card.classList.contains('expanded');
+  // 收起所有其他卡片
+  document.querySelectorAll('.product-card.expanded').forEach(function(c) {
+    if (c !== card) c.classList.remove('expanded');
+  });
+  // 切换当前卡片
+  card.classList.toggle('expanded', !wasExpanded);
+}
+
+// ===== 搜索功能 =====
+function setupSearch() {
+  var searchInput = document.getElementById('searchInput');
+  var searchClear = document.getElementById('searchClear');
+  var searchCount = document.getElementById('searchCount');
+  var noResult = document.getElementById('noResult');
+  if (!searchInput) return;
+
+  searchInput.addEventListener('input', function() {
+    var q = this.value.trim().toLowerCase();
+    if (searchClear) searchClear.classList.toggle('show', q.length > 0);
+
+    var cards = document.querySelectorAll('.product-card');
+    var visible = 0;
+    cards.forEach(function(card) {
+      var name = (card.getAttribute('data-name') || '').toLowerCase();
+      var match = name.indexOf(q) !== -1;
+      card.style.display = match ? '' : 'none';
+      // 隐藏对应的分隔线
+      var prev = card.previousElementSibling;
+      if (prev && prev.classList.contains('product-divider')) {
+        prev.style.display = match ? '' : 'none';
+      }
+      if (match) visible++;
+    });
+
+    if (searchCount) searchCount.textContent = q ? '找到 ' + visible + ' 款产品' : '';
+    if (noResult) noResult.classList.toggle('show', q && visible === 0);
+  });
+
+  if (searchClear) {
+    searchClear.addEventListener('click', function() {
+      searchInput.value = '';
+      searchInput.dispatchEvent(new Event('input'));
+      searchInput.focus();
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', setupSearch);
+</script></body>
+</html>

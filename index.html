@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>派恩斯工业紧固件</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;background:#f1f5f9;font-family:'Microsoft YaHei',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}#app{width:100%;max-width:450px;margin:0 auto;background:#fff;min-height:100vh;position:relative;overflow:hidden}
+
+/* === 导航栏 === */
+.nav-bar{position:sticky;top:0;z-index:1000;width:100%;height:52px;background:#1a1a1a;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-logo-icon{width:32px;height:32px;background:#2563eb;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#fff}
+.nav-logo-text{color:#fff;font-size:14px;font-weight:700;letter-spacing:0.5px}
+.nav-logo-sub{color:#94a3b8;font-size:10px}
+.nav-menu-btn{color:#94a3b8;font-size:20px;cursor:pointer;line-height:1}
+
+/* === Hero === */
+.hero-section{background:#1a1a1a;padding:28px 16px 20px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.3}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(26,26,26,.6) 0%,rgba(26,26,26,.8) 100%)}
+.hero-pattern{position:absolute;top:-20px;right:-20px;opacity:0.06;z-index:1}
+.hero-label{font-family:Arial,sans-serif;font-size:9px;color:#94a3b8;letter-spacing:3px;margin-bottom:6px;position:relative;z-index:2}
+.hero-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:4px;line-height:1.2;position:relative;z-index:2}
+.hero-sub{font-size:12px;color:#cbd5e1;margin-bottom:16px;position:relative;z-index:2}
+.hero-cta-wrap{position:relative;z-index:2}
+.hero-cta{display:inline-flex;align-items:center;gap:6px;background:#ea580c;color:#fff;font-size:12px;font-weight:700;padding:8px 18px;border-radius:20px;border:none;cursor:pointer;transition:all .2s cubic-bezier(.4,0,.2,1);box-shadow:0 2px 8px rgba(234,88,12,.3)}
+.hero-cta:active{transform:scale(.96);box-shadow:0 1px 4px rgba(234,88,12,.4)}
+
+/* === 数据指标 === */
+.stats-bar{background:#fff;display:flex;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0}
+.stats-item{flex:1;text-align:center;padding:14px 8px;border-right:1px solid #e2e8f0}
+.stats-item:last-child{border-right:none}
+.stats-num{font-family:Arial,sans-serif;font-size:18px;font-weight:800;color:#2563eb;line-height:1}
+.stats-label{font-size:10px;color:#64748b;margin-top:4px}
+
+/* === 公告栏 === */
+.notice-bar{background:#eff6ff;padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #e2e8f0}
+.notice-icon{width:18px;height:18px;flex-shrink:0}
+.notice-text{font-size:12px;color:#1e40af;line-height:1.5}
+.notice-text strong{color:#1e3a8a}
+
+/* === 区块标题 === */
+.section-header{display:flex;align-items:baseline;gap:8px;padding:24px 16px 12px}
+.section-header h2{font-size:16px;font-weight:700;color:#1a1a1a}
+.section-header span{font-size:10px;color:#94a3b8;letter-spacing:1px;font-family:Arial,sans-serif}
+
+/* === 苹果风动效 === */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{opacity:0;animation:fadeUp .5s cubic-bezier(.4,0,.2,1) forwards}
+.d1{animation-delay:.06s}.d2{animation-delay:.12s}.d3{animation-delay:.18s}.d4{animation-delay:.24s}.d5{animation-delay:.30s}
+
+/* === 品类网格 === */
+.category-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:0 16px 8px}
+.category-item{border-radius:14px;overflow:hidden;display:flex;flex-direction:column;height:200px;background:#fff;cursor:pointer;transition:transform .25s cubic-bezier(.4,0,.2,1),box-shadow .25s ease;box-shadow:4px 4px 12px rgba(0,0,0,.3)}
+.category-item:hover{transform:translateY(-2px);box-shadow:6px 6px 20px rgba(0,0,0,.35)}
+.category-item:active{transform:scale(.96)}
+
+/* 品类卡片顶部横幅大图（固定高度130px，占65%） */
+.cat-img-wrap{position:relative;height:130px;overflow:hidden;flex-shrink:0}
+.cat-img-wrap .cat-img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block}
+
+/* 品类文字区域 */
+.cat-info{padding:8px 12px 10px;display:flex;flex-direction:column;align-items:center;gap:3px}
+
+
+.cat-name{font-size:14px;font-weight:700;color:#1a1a1a}
+.cat-sub{font-size:11px;color:#64748b}
+.cat-count{font-size:11px;font-weight:700;color:#2563eb}
+.cat-count-gray{font-size:11px;font-weight:700;color:#64748b}
+
+/* === 核心优势 === */
+.features-section{background:#fff;margin-top:8px}
+.features-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:0 16px 16px}
+.feature-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;transition:transform .25s cubic-bezier(.4,0,.2,1),box-shadow .25s ease}
+.feature-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.feature-card:active{transform:scale(.97)}
+.feat-icon{width:40px;height:40px;border-radius:12px;background:#eff6ff;display:flex;align-items:center;justify-content:center;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.feature-card:hover .feat-icon{transform:scale(1.08)}
+.feat-title{font-size:13px;font-weight:700;color:#1a1a1a}
+.feat-desc{font-size:11px;color:#64748b}
+
+/* === CTA区域 === */
+.cta-section{background:#eff6ff;padding:28px 16px;margin-top:8px;text-align:center}
+.cta-title{font-size:16px;font-weight:700;color:#1e3a8a;margin-bottom:6px}
+.cta-sub{font-size:12px;color:#475569;line-height:1.6;margin-bottom:16px}
+.cta-buttons{display:flex;gap:10px;justify-content:center}
+.btn-primary{flex:1;background:#2563eb;color:#fff;font-size:13px;font-weight:700;padding:10px 0;border-radius:10px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:all .2s cubic-bezier(.4,0,.2,1);box-shadow:0 2px 8px rgba(37,99,235,.25)}
+.btn-primary:active{transform:scale(.96);box-shadow:0 1px 4px rgba(37,99,235,.3)}
+.btn-secondary{flex:1;background:#ea580c;color:#fff;font-size:13px;font-weight:700;padding:10px 0;border-radius:10px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:all .2s cubic-bezier(.4,0,.2,1);box-shadow:0 2px 8px rgba(234,88,12,.25)}
+.btn-secondary:active{transform:scale(.96);box-shadow:0 1px 4px rgba(234,88,12,.3)}
+
+/* === 关于派恩斯 === */
+.company-section{background:#fff;margin-top:8px;padding-bottom:16px}
+.company-desc{font-size:13px;color:#475569;line-height:1.7;padding:0 16px 16px}
+.company-img{width:100%;height:160px;object-fit:cover;border-radius:0}
+.company-stats{display:flex;justify-content:center;gap:24px;padding:0 16px}
+.company-stat{text-align:center}
+.stat-num{font-size:20px;font-weight:800;color:#2563eb;font-family:Arial,sans-serif}
+.stat-unit{font-size:13px;color:#2563eb;font-weight:600;margin-left:2px}
+.stat-label{font-size:11px;color:#94a3b8;margin-top:2px}
+
+/* === 认证 === */
+.cert-section{background:#f8fafc;padding:16px;margin-top:8px}
+.cert-title{font-size:13px;font-weight:700;color:#1a1a1a;text-align:center;margin-bottom:12px}
+.cert-list{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.cert-badge{background:#fff;border:1px solid #e2e8f0;padding:5px 10px;border-radius:4px;font-size:11px;color:#475569;font-weight:500}
+
+/* === Footer === */
+.footer{background:#1a1a1a;padding:24px 16px}
+.footer-logo{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.footer-logo-icon{width:32px;height:32px;background:#2563eb;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#fff}
+.footer-logo-text{color:#fff;font-size:14px;font-weight:700}
+.footer-logo-sub{color:#94a3b8;font-size:10px;margin-top:1px}
+.footer-contact{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+.footer-contact-item{display:flex;align-items:center;gap:8px}
+.fc-icon{width:18px;height:18px;flex-shrink:0}
+.fc-text{font-size:11px;color:#94a3b8}
+.fc-value{font-size:12px;color:#fff;font-weight:600;margin-left:auto}
+.footer-copyright{text-align:center;font-size:10px;color:#64748b;line-height:1.6}
+
+/* === 底部占位 === */
+.bottom-placeholder{height:56px}
+
+/* === 底部固定栏 === */
+.bottom-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:450px;height:56px;background:#fff;border-top:1px solid #e2e8f0;display:flex;align-items:center;z-index:999}
+.bottom-bar-tel{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;height:40px;margin:8px 0 8px 12px;border:1.5px solid #2563eb;border-radius:10px;color:#2563eb;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s cubic-bezier(.4,0,.2,1)}
+.bottom-bar-tel:active{transform:scale(.96);background:#eff6ff}
+.bottom-bar-contact{flex:2;display:flex;align-items:center;justify-content:center;gap:4px;height:40px;margin:8px 12px 8px 8px;background:#ea580c;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s cubic-bezier(.4,0,.2,1);box-shadow:0 2px 8px rgba(234,88,12,.2)}
+.bottom-bar-contact:active{transform:scale(.96);box-shadow:0 1px 4px rgba(234,88,12,.3)}
+
+/* === 弹窗 === */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center;z-index:2000}
+.modal-overlay.active{display:flex}
+.modal-sheet{background:#fff;width:100%;max-width:450px;border-radius:16px 16px 0 0;padding:16px;max-height:85vh;overflow-y:auto;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-handle{width:36px;height:4px;background:#e2e8f0;border-radius:2px;margin:0 auto 12px}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.modal-header h3{font-size:16px;font-weight:700;color:#1a1a1a}
+.modal-close{width:28px;height:28px;border-radius:50%;border:none;background:#f1f5f9;color:#64748b;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.form-group{margin-bottom:12px}
+.form-label{display:block;font-size:12px;font-weight:600;color:#475569;margin-bottom:4px}
+.required{color:#dc2626}
+.form-input{width:100%;padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;background:#fff;outline:none}
+.form-input:focus{border-color:#2563eb}
+.form-textarea{width:100%;padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px;min-height:80px;resize:vertical;background:#fff;outline:none;font-family:inherit}
+.form-textarea:focus{border-color:#2563eb}
+.form-submit{width:100%;padding:12px;background:#2563eb;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;margin-top:8px;cursor:pointer}
+.form-success{display:none;text-align:center;padding:20px 0}
+.form-success.show{display:block}
+.success-icon{font-size:32px;margin-bottom:8px}
+.success-text{font-size:16px;font-weight:700;color:#16a34a;margin-bottom:4px}
+.success-sub{font-size:12px;color:#64748b}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- 导航栏 -->
+<nav class="nav-bar">
+  <div class="nav-logo">
+    <div class="nav-logo-icon">P</div>
+    <div>
+      <div class="nav-logo-text">PINES</div>
+      <div class="nav-logo-sub">派恩斯工业</div>
+    </div>
+  </div>
+  <div class="nav-menu-btn">&#9776;</div>
+</nav>
+
+<!-- Hero -->
+<section class="hero-section">
+  <img class="hero-bg" src="images/hero-bg.jpg" alt="" aria-hidden="true">
+  <div class="hero-overlay"></div>
+  <svg class="hero-pattern" width="140" height="140" viewBox="0 0 140 140" fill="none">
+    <polygon points="70,10 125,40 125,100 70,130 15,100 15,40" fill="none" stroke="white" stroke-width="1.5"/>
+    <polygon points="70,25 110,47 110,93 70,115 30,93 30,47" fill="none" stroke="white" stroke-width="1"/>
+    <polygon points="70,40 95,55 95,85 70,100 45,85 45,55" fill="none" stroke="white" stroke-width="0.5"/>
+  </svg>
+  <div class="hero-label">INDUSTRIAL FASTENERS</div>
+  <div class="hero-title">派恩斯工业紧固件</div>
+  <div class="hero-sub">弹性销 · 直槽销 · 实心销 · 卡扣 · 垫片</div>
+  <div class="hero-cta-wrap"><button class="hero-cta" onclick="openInquiryForm()">立即咨询 &rarr;</button></div>
+</section>
+
+<!-- 数据指标 -->
+<div class="stats-bar">
+  <div class="stats-item">
+    <div class="stats-num">500+</div>
+    <div class="stats-label">产品规格</div>
+  </div>
+  <div class="stats-item">
+    <div class="stats-num">20+</div>
+    <div class="stats-label">年制造经验</div>
+  </div>
+  <div class="stats-item">
+    <div class="stats-num">50+</div>
+    <div class="stats-label">出口国家</div>
+  </div>
+</div>
+
+<!-- 公告栏 -->
+<div class="notice-bar">
+  <svg class="notice-icon" viewBox="0 0 18 18" fill="none"><path d="M9 1C4.58 1 1 4.58 1 9s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14.5c-3.58 0-6.5-2.92-6.5-6.5S5.42 2.5 9 2.5s6.5 2.92 6.5 6.5-2.92 6.5-6.5 6.5z" fill="#2563eb"/><circle cx="9" cy="6" r="1" fill="#2563eb"/><rect x="8" y="8" width="2" height="5" rx="1" fill="#2563eb"/></svg>
+  <span class="notice-text"><strong>新品上线：</strong>DIN 1481弹性圆柱销，批量现货，欢迎询价采购</span>
+</div>
+
+<!-- 产品中心 -->
+<div class="section-header"><h2>产品中心</h2><span>PRODUCT CENTER</span></div>
+<div class="category-grid">
+  <div class="category-item cat-pins fade-up d1" onclick="location.href='category-pins.html'">
+    <div class="cat-img-wrap"><img class="cat-img" src="images/cat-pins-ai.jpg" alt="销类" loading="lazy"></div>
+    <div class="cat-info">
+      <div class="cat-name">销类 Pins</div>
+      <div class="cat-sub">圆柱销 / 圆锥销 / 定位销</div>
+      <div class="cat-count">9款</div>
+    </div>
+  </div>
+  <div class="category-item cat-washers fade-up d2" onclick="location.href='category-washers.html'">
+    <div class="cat-img-wrap"><img class="cat-img" src="images/cat-washers-ai.jpg" alt="垫片" loading="lazy"></div>
+    <div class="cat-info">
+      <div class="cat-name">垫片</div>
+      <div class="cat-sub">Washers</div>
+      <div class="cat-count">3款</div>
+    </div>
+  </div>
+  <div class="category-item cat-clips fade-up d3" onclick="location.href='category-clips.html'">
+    <div class="cat-img-wrap"><img class="cat-img" src="images/cat-clips-ai.jpg" alt="卡环卡扣" loading="lazy"></div>
+    <div class="cat-info">
+      <div class="cat-name">卡环卡扣</div>
+      <div class="cat-sub">Rings</div>
+      <div class="cat-count">7款</div>
+    </div>
+  </div>
+  <div class="category-item cat-bolts fade-up d4" onclick="location.href='category-bolts.html'">
+    <div class="cat-img-wrap"><img class="cat-img" src="images/cat-bolts.jpg" alt="螺栓螺钉" loading="lazy"></div>
+    <div class="cat-info">
+      <div class="cat-name">螺栓螺钉</div>
+      <div class="cat-sub">Bolts</div>
+      <div class="cat-count">5款</div>
+    </div>
+  </div>
+  <div class="category-item cat-custom fade-up d5" onclick="location.href='category-custom.html'">
+    <div class="cat-img-wrap" style="height:130px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e293b 0%,#0f172a 100%);">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/><path d="M12 8v8M8 12h8" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+    <div class="cat-info">
+      <div class="cat-name">非标定制</div>
+      <div class="cat-sub">Custom</div>
+      <div class="cat-count-gray">按图开发</div>
+    </div>
+  </div>
+</div>
+
+<!-- 核心优势 -->
+<div class="features-section">
+  <div class="section-header"><h2>核心优势</h2><span>WHY CHOOSE US</span></div>
+  <div class="features-list">
+    <div class="feature-card fade-up d1">
+      <div class="feat-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="7" width="16" height="11" rx="1" stroke="#2563eb" stroke-width="1.5" fill="none"/><rect x="5" y="2" width="10" height="5" rx="1" stroke="#2563eb" stroke-width="1.5" fill="none"/><line x1="6" y1="11" x2="14" y2="11" stroke="#2563eb" stroke-width="1.2"/><line x1="6" y1="14" x2="11" y2="14" stroke="#2563eb" stroke-width="1.2"/></svg>
+      </div>
+      <div class="feat-title">自有工厂</div>
+      <div class="feat-desc">全程自产自销</div>
+    </div>
+    <div class="feature-card fade-up d2">
+      <div class="feat-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#2563eb" stroke-width="1.5" fill="none"/><line x1="7" y1="14" x2="13" y2="14" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="9" r="2.5" stroke="#2563eb" stroke-width="1.5" fill="none"/></svg>
+      </div>
+      <div class="feat-title">专业检测</div>
+      <div class="feat-desc">ISO认证实验室</div>
+    </div>
+    <div class="feature-card fade-up d3">
+      <div class="feat-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" rx="2" stroke="#2563eb" stroke-width="1.5" fill="none"/><line x1="2" y1="7" x2="18" y2="7" stroke="#2563eb" stroke-width="1.2"/><line x1="7" y1="7" x2="7" y2="18" stroke="#2563eb" stroke-width="1.2"/></svg>
+      </div>
+      <div class="feat-title">快速交付</div>
+      <div class="feat-desc">24h现货发货</div>
+    </div>
+    <div class="feature-card fade-up d4">
+      <div class="feat-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#2563eb" stroke-width="1.5" fill="none"/><path d="M7 10l2.5 2.5L14 8" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="feat-title">非标定制</div>
+      <div class="feat-desc">按图定制开发</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-title">获取产品手册 &amp; 报价方案</div>
+  <div class="cta-sub">专业团队一对一服务，提供技术选型建议<br>最快当天反馈报价，支持样品试用</div>
+  <div class="cta-buttons">
+    <button class="btn-primary" id="btnPhone">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3.5 1.5c-.5 0-1 .3-1.2.8l-1 2.5c-.2.5 0 1 .3 1.3 0 0 1.2 1.2 2.2 2.5 1 1.3 2.2 3 2.2 3 .3.3.7.5 1.2.3l2.5-1c.5-.2.8-.7.8-1.2v-1.5c0-.5-.3-1-.8-1.2l-1-.5c-.5-.2-1 0-1.3.3l-.5.5c-.3-.2-.7-.5-1-.8-.3-.3-.6-.7-.8-1l.5-.5c.3-.3.5-.8.3-1.3l-.5-1c-.2-.5-.7-.8-1.2-.8h-1.5z" stroke="white" stroke-width="1.2" fill="none"/></svg>
+      电话咨询
+    </button>
+    <button class="btn-secondary" id="btnInquiry">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2" width="12" height="10" rx="1" stroke="white" stroke-width="1.2" fill="none"/><path d="M1 4l6 4 6-4" stroke="white" stroke-width="1.2" fill="none"/></svg>
+      在线询价
+    </button>
+  </div>
+</div>
+
+<!-- 关于 -->
+<div class="company-section">
+  <div class="section-header"><h2>关于派恩斯</h2><span>ABOUT PINES</span></div>
+  <img class="company-img" src="images/about-factory-ai.jpg" alt="派恩斯工厂" loading="lazy">
+  <p class="company-desc">派恩斯是一家专业从事金属紧固件研发与制造的企业，主要产品涵盖弹性销、直槽销、实心销、卡扣、垫片等标准件及非标定制件，广泛应用于汽车、机械、电子、航空等领域。</p>
+  <div class="company-stats">
+    <div class="company-stat">
+      <div><span class="stat-num">20+</span><span class="stat-unit">年</span></div>
+      <div class="stat-label">制造经验</div>
+    </div>
+    <div class="company-stat">
+      <div><span class="stat-num">500+</span><span class="stat-unit">款</span></div>
+      <div class="stat-label">产品规格</div>
+    </div>
+    <div class="company-stat">
+      <div><span class="stat-num">50+</span><span class="stat-unit">国</span></div>
+      <div class="stat-label">出口国家</div>
+    </div>
+  </div>
+</div>
+
+<!-- 认证 -->
+<div class="cert-section">
+  <div class="cert-title">认证与标准</div>
+  <div class="cert-list">
+    <span class="cert-badge">ISO 9001</span>
+    <span class="cert-badge">DIN 标准</span>
+    <span class="cert-badge">ISO 8752</span>
+    <span class="cert-badge">ANSI/ASME</span>
+    <span class="cert-badge">JIS 标准</span>
+    <span class="cert-badge">GB 国标</span>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-logo">
+    <div class="footer-logo-icon">P</div>
+    <div>
+      <div class="footer-logo-text">派恩斯工业 · PINES</div>
+      <div class="footer-logo-sub">Professional Industrial Fasteners</div>
+    </div>
+  </div>
+  <div class="footer-contact">
+    <div class="footer-contact-item">
+      <svg class="fc-icon" viewBox="0 0 18 18" fill="none"><path d="M4.5 2.5c-.5 0-.9.3-1.1.7l-.8 2.2c-.2.4 0 .8.2 1.1 0 0 1 1 1.8 2.2.8 1.1 1.8 2.6 1.8 2.6.2.3.6.4 1 .3l2.2-.8c.4-.2.7-.6.7-1.1v-1.3c0-.4-.3-.9-.7-1.1l-.9-.4c-.4-.2-.9 0-1.1.3l-.4.4c-.3-.2-.6-.4-.9-.7-.3-.3-.5-.6-.7-.9l.4-.4c.3-.3.4-.7.3-1.1l-.4-.9c-.2-.4-.6-.7-1.1-.7h-1.3z" stroke="#94a3b8" stroke-width="1.2" fill="none"/></svg>
+      <span class="fc-text">全国服务热线</span>
+      <span class="fc-value">400-XXX-XXXX</span>
+    </div>
+    <div class="footer-contact-item">
+      <svg class="fc-icon" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="1" stroke="#94a3b8" stroke-width="1.2" fill="none"/><path d="M2 6l7 4 7-4" stroke="#94a3b8" stroke-width="1.2" fill="none"/></svg>
+      <span class="fc-text">商务邮箱</span>
+      <span class="fc-value">sales@pines.com</span>
+    </div>
+    <div class="footer-contact-item">
+      <svg class="fc-icon" viewBox="0 0 18 18" fill="none"><path d="M9 1.5C5.5 1.5 2.5 4.2 2.5 7.5c0 2.2 1.2 4.2 3 5.5l.5 2.5c0 .3.3.5.6.3l2.2-1.2c.4.1.8.1 1.2.1 3.5 0 6.5-2.7 6.5-6s-3-6.5-6.5-6.5z" stroke="#94a3b8" stroke-width="1.2" fill="none"/></svg>
+      <span class="fc-text">工厂地址</span>
+      <span class="fc-value">中国制造</span>
+    </div>
+    <div class="footer-contact-item">
+      <svg class="fc-icon" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="#94a3b8" stroke-width="1.2" fill="none"/><path d="M9 5v4.5l3 1.5" stroke="#94a3b8" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+      <span class="fc-text">工作时间</span>
+      <span class="fc-value">周一至周六 8:00-18:00</span>
+    </div>
+  </div>
+  <div class="footer-copyright">Copyright &copy; 2026 派恩斯工业紧固件<br>专业制造 · 品质保障 · 服务至上</div>
+</footer>
+
+<div class="bottom-placeholder"></div>
+</div>
+
+<!-- 底部固定栏 -->
+<div class="bottom-bar">
+  <div class="bottom-bar-tel" id="bottomPhone">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3.5 1.5c-.5 0-1 .3-1.2.8l-1 2.5c-.2.5 0 1 .3 1.3 0 0 1.2 1.2 2.2 2.5 1 1.3 2.2 3 2.2 3 .3.3.7.5 1.2.3l2.5-1c.5-.2.8-.7.8-1.2v-1.5c0-.5-.3-1-.8-1.2l-1-.5c-.5-.2-1 0-1.3.3l-.5.5c-.3-.2-.7-.5-1-.8-.3-.3-.6-.7-.8-1l.5-.5c.3-.3.5-.8.3-1.3l-.5-1c-.2-.5-.7-.8-1.2-.8h-1.5z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+    电话
+  </div>
+  <div class="bottom-bar-contact" id="bottomInquiry">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2" width="12" height="10" rx="1" stroke="white" stroke-width="1.2" fill="none"/><path d="M1 4l6 4 6-4" stroke="white" stroke-width="1.2" fill="none"/></svg>
+    在线询价 · 获取报价单
+  </div>
+</div>
+
+<!-- 弹窗 -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-sheet" id="modalSheet">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <h3 id="modalTitle">在线询价</h3>
+      <button class="modal-close" id="modalClose">&#10005;</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+var modalOverlay=document.getElementById('modalOverlay');
+var modalBody=document.getElementById('modalBody');
+var modalTitle=document.getElementById('modalTitle');
+var modalClose=document.getElementById('modalClose');
+
+function openInquiry(productName){
+  modalTitle.textContent='在线询价 - '+productName;
+  modalBody.innerHTML='<div class="form-group"><label class="form-label">询价产品</label><input class="form-input" id="inqProduct" value="'+productName+'" readonly></div>'+'<div class="form-group"><label class="form-label">公司名称 <span class="required">*</span></label><input class="form-input" id="inqCompany" placeholder="请输入公司名称"></div>'+'<div class="form-group"><label class="form-label">需求数量</label><input class="form-input" id="inqQty" placeholder="例：10000件/月"></div>'+'<div class="form-group"><label class="form-label">需求描述 <span class="required">*</span></label><textarea class="form-textarea" id="inqDesc" placeholder="请描述规格、材质、用途等需求"></textarea></div>'+'<div class="form-group"><label class="form-label">联系人 <span class="required">*</span></label><input class="form-input" id="inqContact" placeholder="姓名"></div>'+'<div class="form-group"><label class="form-label">联系电话 <span class="required">*</span></label><input class="form-input" id="inqPhone" placeholder="手机号或座机" type="tel"></div>'+'<button class="form-submit" onclick="submitInquiry()">提交询价</button>'+'<div class="form-success" id="formSuccess"><div class="success-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#16a34a" stroke-width="2" fill="none"/><path d="M10 16l4 4 8-8" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="success-text">询价已提交！</div><div class="success-sub">我们将在1个工作日内与您联系</div></div>';
+  modalOverlay.classList.add('active');
+  document.body.style.overflow='hidden';
+}
+
+function openInquiryForm(){
+  modalTitle.textContent='在线询价';
+  modalBody.innerHTML='<div class="form-group"><label class="form-label">感兴趣的产品</label><input class="form-input" id="inqProduct" placeholder="如：弹性销、螺母..."></div>'+'<div class="form-group"><label class="form-label">公司名称 <span class="required">*</span></label><input class="form-input" id="inqCompany" placeholder="请输入公司名称"></div>'+'<div class="form-group"><label class="form-label">需求数量</label><input class="form-input" id="inqQty" placeholder="例：10000件/月"></div>'+'<div class="form-group"><label class="form-label">需求描述 <span class="required">*</span></label><textarea class="form-textarea" id="inqDesc" placeholder="请描述规格、材质、用途等需求"></textarea></div>'+'<div class="form-group"><label class="form-label">联系人 <span class="required">*</span></label><input class="form-input" id="inqContact" placeholder="姓名"></div>'+'<div class="form-group"><label class="form-label">联系电话 <span class="required">*</span></label><input class="form-input" id="inqPhone" placeholder="手机号或座机" type="tel"></div>'+'<button class="form-submit" onclick="submitInquiry()">提交询价</button>'+'<div class="form-success" id="formSuccess"><div class="success-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#16a34a" stroke-width="2" fill="none"/><path d="M10 16l4 4 8-8" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="success-text">询价已提交！</div><div class="success-sub">我们将在1个工作日内与您联系</div></div>';
+  modalOverlay.classList.add('active');
+  document.body.style.overflow='hidden';
+}
+
+function submitInquiry(){
+  var company=document.getElementById('inqCompany').value.trim();
+  var desc=document.getElementById('inqDesc').value.trim();
+  var contact=document.getElementById('inqContact').value.trim();
+  var phone=document.getElementById('inqPhone').value.trim();
+  if(!company){alert('请填写公司名称');return;}
+  if(!desc){alert('请填写需求描述');return;}
+  if(!contact){alert('请填写联系人');return;}
+  if(!phone){alert('请填写联系电话');return;}
+  document.getElementById('formSuccess').classList.add('show');
+  var btns=modalBody.querySelectorAll('.form-submit');
+  if(btns.length)btns[btns.length-1].style.display='none';
+  var groups=modalBody.querySelectorAll('.form-group');
+  groups.forEach(function(g){g.style.display='none';});
+}
+
+function closeModal(){
+  modalOverlay.classList.remove('active');
+  document.body.style.overflow='';
+  var fs=document.getElementById('formSuccess');
+  if(fs)fs.classList.remove('show');
+}
+
+modalClose.addEventListener('click',closeModal);
+modalOverlay.addEventListener('click',function(e){if(e.target===modalOverlay)closeModal();});
+
+var phoneNumber='400-XXX-XXXX';
+document.getElementById('btnPhone').addEventListener('click',function(){window.location.href='tel:'+phoneNumber;});
+document.getElementById('bottomPhone').addEventListener('click',function(){window.location.href='tel:'+phoneNumber;});
+document.getElementById('btnInquiry').addEventListener('click',openInquiryForm);
+document.getElementById('bottomInquiry').addEventListener('click',openInquiryForm);
+</script>
+</body>
+</html>
