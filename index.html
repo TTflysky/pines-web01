@@ -182,6 +182,10 @@
   <div class="menu-close" onclick="closeMenu()">&#10005;</div>
   <div class="menu-item" onclick="scrollToSection('top')"><span>&#8962;</span>首页</div>
   <div class="menu-item" onclick="scrollToSection('products')"><span>&#9733;</span>产品中心</div>
+  <div class="menu-item" onclick="location.href='about-cert.html'"><span>&#9878;</span>资质认证</div>
+  <div class="menu-item" onclick="location.href='about-production.html'"><span>&#9881;</span>生产实力</div>
+  <div class="menu-item" onclick="location.href='about-applications.html'"><span>&#9679;</span>应用案例</div>
+  <div class="menu-item" onclick="location.href='about-clients.html'"><span>&#9670;</span>客户案例</div>
   <div class="menu-item" onclick="scrollToSection('advantages')"><span>&#9734;</span>核心优势</div>
   <div class="menu-item" onclick="scrollToSection('about')"><span>&#9733;</span>关于派恩斯</div>
   <div class="menu-item" onclick="openInquiryForm();closeMenu()"><span>&#9993;</span>立即咨询</div>
@@ -205,16 +209,16 @@
 <!-- 数据指标 -->
 <div class="stats-bar">
   <div class="stats-item">
-    <div class="stats-num">500+</div>
-    <div class="stats-label">产品规格</div>
+    <div class="stats-num">140+</div>
+    <div class="stats-label">员工人数</div>
   </div>
   <div class="stats-item">
-    <div class="stats-num">20+</div>
-    <div class="stats-label">年制造经验</div>
+    <div class="stats-num">9000<span style="font-size:12px">万+</span></div>
+    <div class="stats-label">年产值</div>
   </div>
   <div class="stats-item">
-    <div class="stats-num">50+</div>
-    <div class="stats-label">出口国家</div>
+    <div class="stats-num">5000+</div>
+    <div class="stats-label">在库SKU</div>
   </div>
 </div>
 
@@ -306,6 +310,42 @@
   </div>
 </div>
 
+<!-- 公司实力入口 -->
+<div class="company-section" style="margin-top:8px">
+  <div class="section-header"><h2>走进派恩斯</h2><span>ABOUT US</span></div>
+  <div style="padding:0 16px 4px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="feature-card fade-up d1" onclick="location.href='about-cert.html'" style="cursor:pointer">
+        <div class="feat-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2l2 5h5l-4 3 1.5 5L10 12.5 5.5 15l1.5-5-4-3h5l2-5z" stroke="#2563eb" stroke-width="1.5" fill="none"/></svg>
+        </div>
+        <div class="feat-title">资质认证</div>
+        <div class="feat-desc">IATF16949 · ISO14001 · 专利</div>
+      </div>
+      <div class="feature-card fade-up d2" onclick="location.href='about-production.html'" style="cursor:pointer">
+        <div class="feat-icon" style="background:#dcfce7">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="8" width="16" height="8" rx="1" stroke="#16a34a" stroke-width="1.5" fill="none"/><path d="M5 8V5a4 4 0 018 0v3" stroke="#16a34a" stroke-width="1.5" fill="none"/></svg>
+        </div>
+        <div class="feat-title">生产实力</div>
+        <div class="feat-desc">8步生产流程 · 先进设备</div>
+      </div>
+      <div class="feature-card fade-up d3" onclick="location.href='about-applications.html'" style="cursor:pointer">
+        <div class="feat-icon" style="background:#fef3c7">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="#d97706" stroke-width="1.5" fill="none"/><path d="M7 10l2 2 4-4" stroke="#d97706" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="feat-title">应用案例</div>
+        <div class="feat-desc">汽车 · 风电 · 工程机械</div>
+      </div>
+      <div class="feature-card fade-up d4" onclick="location.href='about-clients.html'" style="cursor:pointer">
+        <div class="feat-icon" style="background:#fce7f3">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="8" cy="7" r="3" stroke="#db2777" stroke-width="1.5" fill="none"/><circle cx="13" cy="7" r="3" stroke="#db2777" stroke-width="1.5" fill="none"/><path d="M2 17c0-3.3 2.7-6 6-6h4c3.3 0 6 2.7 6 6" stroke="#db2777" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <div class="feat-title">客户案例</div>
+        <div class="feat-desc">5000+ SKU · 多领域覆盖</div>
+      </div>
+    </div>
+  </div>
+
 <!-- CTA -->
 <div class="cta-section">
   <div class="cta-title">获取产品手册 &amp; 报价方案</div>
@@ -326,33 +366,33 @@
 <div class="company-section">
   <div class="section-header" id="about"><h2>关于派恩斯</h2><span>ABOUT PINES</span></div>
   <img class="company-img" src="images/about-factory-ai.jpg" alt="派恩斯工厂" loading="lazy">
-  <p class="company-desc">派恩斯是一家专业从事金属紧固件研发与制造的企业，主要产品涵盖弹性销、直槽销、实心销、卡扣、垫片等标准件及非标定制件，广泛应用于汽车、机械、电子、航空等领域。</p>
+  <p class="company-desc">安徽派恩斯成立于2019年，专业从事弹性销（开口销、卷销、定位衬套）和实心销（圆柱销）类零件的研发、生产与销售。公司拥有从原材料分切、冲压、热处理到磷化的完整生产链，通过 IATF16949 和 ISO14001 双体系认证。</p>
   <div class="company-stats">
     <div class="company-stat">
-      <div><span class="stat-num">20+</span><span class="stat-unit">年</span></div>
-      <div class="stat-label">制造经验</div>
+      <div><span class="stat-num">140+</span><span class="stat-unit">人</span></div>
+      <div class="stat-label">员工人数</div>
     </div>
     <div class="company-stat">
-      <div><span class="stat-num">500+</span><span class="stat-unit">款</span></div>
-      <div class="stat-label">产品规格</div>
+      <div><span class="stat-num">9000<span style="font-size:12px">万+</span></span></div>
+      <div class="stat-label">年产值(元)</div>
     </div>
     <div class="company-stat">
-      <div><span class="stat-num">50+</span><span class="stat-unit">国</span></div>
-      <div class="stat-label">出口国家</div>
+      <div><span class="stat-num">5000+</span></div>
+      <div class="stat-label">在库SKU</div>
     </div>
   </div>
-</div>
+  <p class="company-desc" style="font-size:13px;color:#475569;line-height:1.7;padding:0 16px 16px;margin-top:-8px">安徽派恩斯金属制品有限公司成立于2019年，专业从事弹性销（开口销、卷销、定位衬套）和实心销（圆柱销）类零件的研发、生产与销售。公司拥有从原材料分切、冲压、热处理到磷化的完整生产链，通过 IATF16949 和 ISO14001 双体系认证。</p>
 
 <!-- 认证 -->
 <div class="cert-section">
   <div class="cert-title">认证与标准</div>
   <div class="cert-list">
-    <span class="cert-badge">ISO 9001</span>
-    <span class="cert-badge">DIN 标准</span>
+    <span class="cert-badge">IATF 16949</span>
+    <span class="cert-badge">ISO 14001</span>
     <span class="cert-badge">ISO 8752</span>
-    <span class="cert-badge">ANSI/ASME</span>
-    <span class="cert-badge">JIS 标准</span>
+    <span class="cert-badge">DIN 标准</span>
     <span class="cert-badge">GB 国标</span>
+    <span class="cert-badge">ISO 8734</span>
   </div>
 </div>
 
