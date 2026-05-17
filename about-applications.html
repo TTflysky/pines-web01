@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>应用案例 | 派恩斯工业</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;background:#f1f5f9;font-family:'Microsoft YaHei',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+#app{width:100%;max-width:450px;margin:0 auto;background:#fff;min-height:100vh;position:relative;overflow:hidden}
+
+/* 导航栏 */
+.nav-bar{position:sticky;top:0;z-index:1000;width:100%;height:52px;background:#1a1a1a;display:flex;align-items:center;padding:0 16px;gap:12px}
+.nav-back{color:#94a3b8;font-size:20px;cursor:pointer;padding:4px}
+.nav-logo{display:flex;align-items:center;gap:8px}
+.nav-logo-icon{width:28px;height:28px;background:#2563eb;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff}
+.nav-logo-text{color:#fff;font-size:13px;font-weight:700}
+.nav-menu-btn{color:#94a3b8;font-size:20px;cursor:pointer;margin-left:auto;padding:8px}
+
+/* 页面标题 */
+.page-header{background:#1a1a1a;padding:20px 16px 24px}
+.page-eyebrow{font-size:10px;color:#64748b;letter-spacing:2px;font-family:Arial,sans-serif;margin-bottom:4px}
+.page-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:4px}
+.page-sub{font-size:12px;color:#94a3b8}
+
+/* 区块标题 */
+.section-header{display:flex;align-items:baseline;gap:8px;padding:20px 16px 12px}
+.section-header h2{font-size:16px;font-weight:700;color:#1a1a1a}
+.section-header span{font-size:10px;color:#94a3b8;letter-spacing:1px;font-family:Arial,sans-serif}
+
+/* 行业标签 */
+.industry-strip{overflow-x:auto;padding:0 16px 16px;scrollbar-width:none}
+.industry-strip::-webkit-scrollbar{display:none}
+.industry-tabs{display:flex;gap:8px;min-width:max-content}
+.ind-tab{padding:6px 14px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:20px;font-size:12px;color:#475569;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .2s}
+.ind-tab.active{background:#2563eb;color:#fff;border-color:#2563eb}
+
+/* 应用场景卡片 */
+.card{padding:0 16px 16px}
+.app-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.app-card-img{height:120px;background:linear-gradient(135deg,#1e293b 0%,#334155 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.app-card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,.3))}
+.app-icon{font-size:40px;z-index:1}
+.app-industry-tag{position:absolute;bottom:8px;left:12px;z-index:2;background:rgba(0,0,0,.5);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px}
+.app-card-body{padding:14px}
+.app-title{font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:6px}
+.app-tags{display:flex;flex-wrap:wrap;gap:6px}
+.app-tag{background:#eff6ff;color:#1e40af;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px}
+
+/* 行业概述 */
+.industry-intro{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:16px;margin:0 16px 16px}
+.industry-intro-title{font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.industry-intro-text{font-size:12px;color:#64748b;line-height:1.7}
+
+/* 底部占位 */
+.bottom-placeholder{height:56px}
+
+/* 苹果风动效 */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{opacity:0;animation:fadeUp .5s cubic-bezier(.4,0,.2,1) forwards}
+.d1{animation-delay:.06s}.d2{animation-delay:.12s}.d3{animation-delay:.18s}.d4{animation-delay:.24s}.d5{animation-delay:.30s}
+
+/* 侧边菜单 */
+.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1001;opacity:0;visibility:hidden;transition:opacity .3s}
+.menu-overlay.active{opacity:1;visibility:visible}
+.menu-panel{position:fixed;top:0;right:0;width:260px;height:100%;background:#1a1a1a;z-index:1002;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column;padding:60px 0 20px}
+.menu-panel.active{transform:translateX(0)}
+.menu-close{position:absolute;top:14px;right:16px;color:#94a3b8;font-size:24px;cursor:pointer;line-height:1;padding:4px}
+.menu-item{color:#fff;font-size:15px;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer}
+.menu-item span{color:#2563eb;font-size:13px;margin-right:10px}
+
+/* 底部固定栏 */
+.bottom-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:450px;height:56px;background:#fff;border-top:1px solid #e2e8f0;display:flex;align-items:center;z-index:999}
+.bottom-bar-tel{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;height:40px;margin:8px 0 8px 12px;border:1.5px solid #2563eb;border-radius:10px;color:#2563eb;font-size:13px;font-weight:700;cursor:pointer}
+.bottom-bar-contact{flex:2;display:flex;align-items:center;justify-content:center;gap:4px;height:40px;margin:8px 12px 8px 8px;background:#ea580c;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- 导航栏 -->
+<nav class="nav-bar">
+  <a href="index.html" class="nav-back">&#8592;</a>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">P</div>
+    <div class="nav-logo-text">PINES 派恩斯</div>
+  </div>
+  <div class="nav-menu-btn" onclick="openMenu()">&#9776;</div>
+</nav>
+
+<!-- 侧边菜单 -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="menu-panel" id="menuPanel">
+  <div class="menu-close" onclick="closeMenu()">&#10005;</div>
+  <div class="menu-item" onclick="location.href='index.html'"><span>&#8962;</span>首页</div>
+  <div class="menu-item" onclick="location.href='category-pins.html'"><span>&#9733;</span>产品中心</div>
+  <div class="menu-item" onclick="location.href='about-cert.html'"><span>&#9878;</span>资质认证</div>
+  <div class="menu-item" onclick="location.href='about-production.html'"><span>&#9881;</span>生产实力</div>
+  <div class="menu-item" onclick="location.href='about-applications.html'"><span>&#9679;</span>应用案例</div>
+  <div class="menu-item" onclick="location.href='about-clients.html'"><span>&#9670;</span>客户案例</div>
+</div>
+
+<!-- 页面标题 -->
+<div class="page-header">
+  <div class="page-eyebrow">PINES INDUSTRIAL</div>
+  <div class="page-title">应用案例</div>
+  <div class="page-sub">覆盖汽车 · 风电 · 工程机械 · 电动工具 · 家电</div>
+</div>
+
+<!-- 行业标签 -->
+<div class="industry-strip">
+  <div class="industry-tabs">
+    <div class="ind-tab active" onclick="filterApps('all', this)">全部行业</div>
+    <div class="ind-tab" onclick="filterApps('auto', this)">汽车制造</div>
+    <div class="ind-tab" onclick="filterApps('wind', this)">风力发电</div>
+    <div class="ind-tab" onclick="filterApps('machine', this)">工程机械</div>
+    <div class="ind-tab" onclick="filterApps('tool', this)">电动工具</div>
+    <div class="ind-tab" onclick="filterApps('home', this)">家用电器</div>
+    <div class="ind-tab" onclick="filterApps('energy', this)">新能源</div>
+  </div>
+</div>
+
+<!-- 行业概述 -->
+<div class="industry-intro">
+  <div class="industry-intro-title">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="#2563eb" stroke-width="1.3" fill="none"/><path d="M7 4.5v3.5l2 1.5" stroke="#2563eb" stroke-width="1.3" fill="none" stroke-linecap="round"/></svg>
+    关于应用
+  </div>
+  <div class="industry-intro-text">
+    派恩斯紧固件产品广泛应用于汽车制造、风力发电、工程机械、电动工具、家用电器、新能源等领域。公司常备5000余种销类产品库存，满足客户一站式采购需求，经过多年发展，现已成为国内销类零部件的专业生产制造商。
+  </div>
+</div>
+
+<!-- 全部应用场景 -->
+<div class="card" id="appGrid">
+
+  <!-- 汽车制造 -->
+  <div class="app-card fade-up d1" data-cat="auto">
+    <div class="app-card-img" style="background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%)">
+      <div class="app-icon">🚗</div>
+      <div class="app-industry-tag">汽车制造</div>
+    </div>
+    <div class="app-card-body">
+      <div class="app-title">汽车关键部位紧固</div>
+      <div class="app-tags">
+        <span class="app-tag">汽车差速器</span>
+        <span class="app-tag">发动机引擎盖</span>
+        <span class="app-tag">发动机支架</span>
+        <span class="app-tag">液压分离轴承</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 风力发电 -->
+  <div class="app-card fade-up d2" data-cat="wind">
+    <div class="app-card-img" style="background:linear-gradient(135deg,#14532d 0%,#16a34a 100%)">
+      <div class="app-icon">🌬️</div>
+      <div class="app-industry-tag">风力发电</div>
+    </div>
+    <div class="app-card-body">
+      <div class="app-title">风电设备精密定位</div>
+      <div class="app-tags">
+        <span class="app-tag">风力发电机舱</span>
+        <span class="app-tag">叶片固定</span>
+        <span class="app-tag">齿轮箱定位</span>
+        <span class="app-tag">塔筒连接</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 工程机械 -->
+  <div class="app-card fade-up d3" data-cat="machine">
+    <div class="app-card-img" style="background:linear-gradient(135deg,#78350f 0%,#ea580c 100%)">
+      <div class="app-icon">🚜</div>
+      <div class="app-industry-tag">工程机械</div>
+    </div>
+    <div class="app-card-body">
+      <div class="app-title">工程机械重载连接</div>
+      <div class="app-tags">
+        <span class="app-tag">支重轮</span>
+        <span class="app-tag">液压系统</span>
+        <span class="app-tag">传动机构</span>
+        <span class="app-tag">底盘件</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 电动工具 -->
+  <div class="app-card fade-up d4" data-cat="tool">
+    <div class="app-card-img" style="background:linear-gradient(135deg,#312e81 0%,#6366f1 100%)">
+      <div class="app-icon">🔧</div>
+      <div class="app-industry-tag">电动工具</div>
+    </div>
+    <div class="app-card-body">
+      <div class="app-title">电动工具精密传动</div>
+      <div class="app-tags">
+        <span class="app-tag">电钻齿轮箱</span>
+        <span class="app-tag">搅拌机减速箱</span>
+        <span class="app-tag">冲击批定位</span>
+        <span class="app-tag">电机轴心</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 家用电器 -->
+  <div class="app-card fade-up d5" data-cat="home">
+    <div class="app-card-img" style="background:linear-gradient(135deg,#9d174d 0%,#ec4899 100%)">
+      <div class="app-icon">🧲</div>
+      <div class="app-industry-tag">家用电器</div>
+    </div>
+    <div class="app-card-body">
+      <div class="app-title">家电精密装配连接</div>
+      <div class="app-tags">
+        <span class="app-tag">保温杯组件</span>
+        <span class="app-tag">空调压缩机</span>
+        <span class="app-tag">洗衣机轴承</span>
+        <span class="app-tag">小家电传动</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 新能源 -->
+  <div class="app-card fade-up d6" data-cat="energy">
+    <div class="app-card-img" style="background:linear-gradient(135deg,#064e3b 0%,#059669 100%)">
+      <div class="app-icon">⚡</div>
+      <div class="app-industry-tag">新能源</div>
+    </div>
+    <div class="app-card-body">
+      <div class="app-title">新能源设备定位连接</div>
+      <div class="app-tags">
+        <span class="app-tag">锂电池 PACK</span>
+        <span class="app-tag">光伏支架</span>
+        <span class="app-tag">储能设备</span>
+        <span class="app-tag">充电桩</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 产品适配说明 -->
+<div style="margin:0 16px 16px">
+  <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:16px">
+    <div style="font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:8px">为什么选择派恩斯？</div>
+    <div style="font-size:12px;color:#475569;line-height:1.7">
+      我们不仅提供标准品，更擅长根据客户图纸定制非标产品。无论是特殊材质、特殊表面处理，还是大批量自动化装配需求，派恩斯都能提供从材料选型到成品交付的一站式解决方案。
+    </div>
+  </div>
+</div>
+
+<div class="bottom-placeholder"></div>
+</div>
+
+<!-- 底部固定栏 -->
+<div class="bottom-bar">
+  <div class="bottom-bar-tel" onclick="location.href='tel:400XXXXXXX'">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3.5 1.5c-.5 0-1 .3-1.2.8l-1 2.5c-.2.5 0 1 .3 1.3 0 0 1.2 1.2 2.2 2.5 1 1.3 2.2 3 2.2 3 .3.3.7.5 1.2.3l2.5-1c.5-.2.8-.7.8-1.2v-1.5c0-.5-.3-1-.8-1.2l-1-.5c-.5-.2-1 0-1.3.3l-.5.5c-.3-.2-.7-.5-1-.8-.3-.3-.6-.7-.8-1l.5-.5c.3-.3.5-.8.3-1.3l-.5-1c-.2-.5-.7-.8-1.2-.8h-1.5z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+    电话咨询
+  </div>
+  <div class="bottom-bar-contact" onclick="location.href='index.html'">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2" width="12" height="10" rx="1" stroke="white" stroke-width="1.2" fill="none"/><path d="M1 4l6 4 6-4" stroke="white" stroke-width="1.2" fill="none"/></svg>
+    在线询价
+  </div>
+</div>
+
+<script>
+function openMenu(){
+  document.getElementById('menuPanel').classList.add('active');
+  document.getElementById('menuOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeMenu(){
+  document.getElementById('menuPanel').classList.remove('active');
+  document.getElementById('menuOverlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+function filterApps(cat, el){
+  document.querySelectorAll('.ind-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.app-card').forEach(function(card){
+    if(cat==='all'||card.dataset.cat===cat){
+      card.style.display='';
+    } else {
+      card.style.display='none';
+    }
+  });
+}
+</script>
+</body>
+</html>
