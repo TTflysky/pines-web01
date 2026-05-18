@@ -160,8 +160,10 @@
       var name = nameEl ? nameEl.textContent.trim() : '';
       if (name && _inCartMap[name]) {
         btn.classList.add('in-cart');
+        btn.textContent = '✓ 已加入购物车';
       } else {
         btn.classList.remove('in-cart');
+        btn.textContent = '🛒 加入购物车';
       }
     });
   }
@@ -194,12 +196,18 @@
     cartIcon.innerHTML = '🛒<span class="nav-cart-badge" id="cartBadge"></span>';
 
     // 桌面端：click；移动端：touchend（防止 300ms 延迟和滚动卡死）
+    var _touchStartY = 0;
     cartIcon.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
       openPanel();
     });
+    cartIcon.addEventListener('touchstart', function(e) {
+      _touchStartY = e.touches[0].clientY;
+    }, {passive: true});
     cartIcon.addEventListener('touchend', function(e) {
+      var dy = Math.abs(e.changedTouches[0].clientY - _touchStartY);
+      if (dy > 10) return; // 滑动时误触，不弹面板
       e.preventDefault();
       e.stopPropagation();
       openPanel();
@@ -318,12 +326,18 @@
     var panel = document.getElementById(CART_PANEL_ID);
     if (!panel) return;
     panel.classList.remove('active');
-    // 恢复滚动位置
+    // 恢复 body 样式（必须全清，防止跟页面其他弹窗冲突）
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.left = '';
     document.body.style.right = '';
-    window.scrollTo(0, _scrollY);
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    // 延迟一帧恢复滚动，避免布局没恢复就 scroll 失效
+    var sy = _scrollY;
+    setTimeout(function() {
+      window.scrollTo(0, sy);
+    }, 10);
     // 等动画结束再隐藏，避免动画被截断
     setTimeout(function() {
       if (!panel.classList.contains('active')) {
@@ -420,6 +434,7 @@
       var cartBtn = document.createElement('button');
       cartBtn.className = 'cart-add-btn';
       cartBtn.setAttribute('type', 'button');
+      cartBtn.textContent = '🛒 加入购物车';
       cartBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         Cart.addFromCard(this);
