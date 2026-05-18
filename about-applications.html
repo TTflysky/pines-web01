@@ -36,11 +36,11 @@ html,body{width:100%;background:#f1f5f9;font-family:'Microsoft YaHei',Helvetica,
 .ind-tab.active{background:#2563eb;color:#fff;border-color:#2563eb}
 
 /* 应用场景卡片 */
-.card{padding:0 16px 16px}
-.app-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card{padding:4px 16px 16px}
+.app-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
 .app-card-img{height:120px;background:linear-gradient(135deg,#1e293b 0%,#334155 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .app-card-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,.3))}
-.app-icon{font-size:40px;z-index:1}
+.app-icon{width:44px;height:44px;display:flex;align-items:center;justify-content:center;z-index:1;color:rgba(255,255,255,.85)}.app-icon svg{width:36px;height:36px;stroke:currentColor;stroke-width:1.3;fill:none}
 .app-industry-tag{position:absolute;bottom:8px;left:12px;z-index:2;background:rgba(0,0,0,.5);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px}
 .app-card-body{padding:14px}
 .app-title{font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:6px}
@@ -48,7 +48,7 @@ html,body{width:100%;background:#f1f5f9;font-family:'Microsoft YaHei',Helvetica,
 .app-tag{background:#eff6ff;color:#1e40af;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px}
 
 /* 行业概述 */
-.industry-intro{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:16px;margin:0 16px 16px}
+.industry-intro{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:16px;margin:0 16px 20px}
 .industry-intro-title{font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .industry-intro-text{font-size:12px;color:#64748b;line-height:1.7}
 
@@ -137,7 +137,7 @@ html,body{width:100%;background:#f1f5f9;font-family:'Microsoft YaHei',Helvetica,
   <!-- 汽车制造 -->
   <div class="app-card fade-up d1" data-cat="auto">
     <div class="app-card-img" style="background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%)">
-      <div class="app-icon">🚗</div>
+      <div class="app-icon"><svg viewBox="0 0 24 24"><circle cx="6.5" cy="16.5" r="2"/><circle cx="17.5" cy="16.5" r="2"/><path d="M4 16.5H2l2.5-7h15L22 16.5h-2"/><path d="M4 16.5l1.5-7h13l1.5 7"/><path d="M6.5 9.5l1.5-3h8l1.5 3"/></svg></div>
       <div class="app-industry-tag">汽车制造</div>
     </div>
     <div class="app-card-body">
@@ -154,7 +154,7 @@ html,body{width:100%;background:#f1f5f9;font-family:'Microsoft YaHei',Helvetica,
   <!-- 风力发电 -->
   <div class="app-card fade-up d2" data-cat="wind">
     <div class="app-card-img" style="background:linear-gradient(135deg,#14532d 0%,#16a34a 100%)">
-      <div class="app-icon">🌬️</div>
+      <div class="app-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="17" r="1.5"/><path d="M12 17V4"/><path d="M12 7l5-2"/><path d="M12 9.5l4 3"/><path d="M12 9.5l-4 3"/></svg></div>
       <div class="app-industry-tag">风力发电</div>
     </div>
     <div class="app-card-body">
@@ -171,7 +171,7 @@ html,body{width:100%;background:#f1f5f9;font-family:'Microsoft YaHei',Helvetica,
   <!-- 工程机械 -->
   <div class="app-card fade-up d3" data-cat="machine">
     <div class="app-card-img" style="background:linear-gradient(135deg,#78350f 0%,#ea580c 100%)">
-      <div class="app-icon">🚜</div>
+      <div class="app-icon"><svg viewBox="0 0 24 24"><path d="M4 17h16"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M4 17l1.5-6h13l1.5 6"/><path d="M6 11l2-4h8l2 4"/></svg></div>
       <div class="app-industry-tag">工程机械</div>
     </div>
     <div class="app-card-body">
@@ -188,7 +188,7 @@ html,body{width:100%;background:#f1f5f9;font-family:'Microsoft YaHei',Helvetica,
   <!-- 电动工具 -->
   <div class="app-card fade-up d4" data-cat="tool">
     <div class="app-card-img" style="background:linear-gradient(135deg,#312e81 0%,#6366f1 100%)">
-      <div class="app-icon">🔧</div>
+      <div class="app-icon"><svg viewBox="0 0 24 24"><path d="M14.5 4l5 5-2.5 2.5-5-5z"/><path d="M5 16.5L2.5 19l2.5 2.5 2.5-2.5z"/><path d="M12 10l-7 7"/></svg></div>
       <div class="app-industry-tag">电动工具</div>
     </div>
     <div class="app-card-body">
@@ -205,7 +205,7 @@ html,body{width:100%;background:#f1f5f9;font-family:'Microsoft YaHei',Helvetica,
   <!-- 家用电器 -->
   <div class="app-card fade-up d5" data-cat="home">
     <div class="app-card-img" style="background:linear-gradient(135deg,#9d174d 0%,#ec4899 100%)">
-      <div class="app-icon">🧲</div>
+      <div class="app-icon"><svg viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="14" rx="2"/><path d="M10 17v3a2 2 0 0 0 4 0v-3"/><path d="M9 7h6"/><path d="M9 10h6"/></svg></div>
       <div class="app-industry-tag">家用电器</div>
     </div>
     <div class="app-card-body">
@@ -222,7 +222,7 @@ html,body{width:100%;background:#f1f5f9;font-family:'Microsoft YaHei',Helvetica,
   <!-- 新能源 -->
   <div class="app-card fade-up d6" data-cat="energy">
     <div class="app-card-img" style="background:linear-gradient(135deg,#064e3b 0%,#059669 100%)">
-      <div class="app-icon">⚡</div>
+      <div class="app-icon"><svg viewBox="0 0 24 24"><path d="M13 2L4 13h7l-2 9 9-11h-7l2-9z"/></svg></div>
       <div class="app-industry-tag">新能源</div>
     </div>
     <div class="app-card-body">
