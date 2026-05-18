@@ -5,10 +5,15 @@
   font-size: 20px;
   cursor: pointer;
   line-height: 1;
-  padding: 6px;
-  margin-right: -6px;
+  padding: 6px 10px;
+  margin-right: -10px;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
 }
 .nav-cart-badge {
   position: absolute;
@@ -37,29 +42,33 @@
 .cart-add-btn {
   display: block;
   width: calc(100% - 32px);
-  margin: 0 16px 8px;
-  height: 40px;
-  border: 1.5px solid #ea580c;
-  border-radius: 20px;
+  margin: 0 16px 6px;
+  height: 44px;
+  border: 1.5px solid #1e5bb5;
+  border-radius: 22px;
   background: #fff;
-  color: #ea580c;
-  font-size: 13px;
-  font-weight: 600;
+  color: #1e5bb5;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
   transition: all .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 .cart-add-btn:active {
-  background: #ea580c;
+  background: #1e5bb5;
   color: #fff;
   transform: scale(.97);
 }
 .cart-add-btn.in-cart {
-  background: #fef3c7;
-  border-color: #f59e0b;
-  color: #92400e;
+  background: #eef2ff;
+  border-color: #1e5bb5;
+  color: #1e5bb5;
 }
 .cart-add-btn.in-cart:active {
-  background: #f59e0b;
+  background: #1e5bb5;
   color: #fff;
 }
 
