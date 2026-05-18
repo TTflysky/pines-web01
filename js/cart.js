@@ -199,6 +199,10 @@
     cartIcon.title = '购物车';
     cartIcon.innerHTML = '🛒<span class="nav-cart-badge" id="cartBadge"></span>';
     cartIcon.addEventListener('click', openPanel);
+    cartIcon.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      openPanel();
+    });
     navBar.appendChild(cartIcon);
 
     renderBadge();
