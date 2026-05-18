@@ -484,6 +484,33 @@ function submitInquiry(){
   if(!desc){alert('请填写需求描述');return;}
   if(!contact){alert('请填写联系人');return;}
   if(!phone){alert('请填写联系电话');return;}
+
+  var inquiry = {
+    id: Date.now(),
+    time: new Date().toLocaleString('zh-CN'),
+    company: company,
+    product: (document.getElementById('inqProduct')||{value:''}).value,
+    qty: (document.getElementById('inqQty')||{value:''}).value,
+    desc: desc,
+    contact: contact,
+    phone: phone,
+    read: false
+  };
+
+  // 1. 存 localStorage（同会话通知用）
+  var inquiries = [];
+  try { inquiries = JSON.parse(localStorage.getItem('pines_inquiries') || '[]'); } catch(e){}
+  inquiries.unshift(inquiry);
+  if (inquiries.length > 500) inquiries = inquiries.slice(0, 500);
+  localStorage.setItem('pines_inquiries', JSON.stringify(inquiries));
+
+  // 2. 推送到保存服务（真正落盘）
+  fetch('http://127.0.0.1:8765/save-inquiry', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(inquiry)
+  }).catch(function(){});  // 服务未启动时静默失败，不阻塞用户
+
   document.getElementById('formSuccess').classList.add('show');
   var btns=modalBody.querySelectorAll('.form-submit');
   if(btns.length)btns[btns.length-1].style.display='none';
