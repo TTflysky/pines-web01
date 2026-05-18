@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>确认订单 - 派恩斯工业紧固件</title>
+<link rel="stylesheet" href="css/cart.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 100%;
+    background: #f5f5f5;
+    font-family: 'Microsoft YaHei', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  #app {
+    width: 100%; max-width: 450px; margin: 0 auto;
+    background: #fff; min-height: 100vh; position: relative;
+  }
+
+  /* 导航 */
+  .nav-bar {
+    position: sticky; top: 0; z-index: 1000;
+    width: 100%; height: 50px;
+    background: #1e5bb5;
+    display: flex; align-items: center;
+    padding: 0 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .nav-back {
+    color: #fff; font-size: 14px; font-weight: 600; cursor: pointer;
+    text-decoration: none; display: flex; align-items: center; gap: 4px;
+  }
+  .nav-back:active { opacity: 0.7; }
+  .nav-title {
+    color: #fff; font-size: 15px; font-weight: 700;
+    margin-left: 12px;
+  }
+
+  /* 区域标题 */
+  .section-title {
+    font-size: 15px; font-weight: 700; color: #222;
+    padding: 16px 16px 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title .st-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #1e5bb5; color: #fff;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* 订单商品 */
+  .order-items { padding: 0 16px; }
+  .order-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid #f0f0f0;
+  }
+  .order-item:last-child { border-bottom: none; }
+  .order-item-img {
+    width: 56px; height: 42px; border-radius: 6px;
+    object-fit: cover; flex-shrink: 0; background: #f5f5f5;
+  }
+  .order-item-info { flex: 1; min-width: 0; }
+  .order-item-name { font-size: 14px; font-weight: 600; color: #222; }
+  .order-item-spec { font-size: 11px; color: #888; margin-top: 2px; }
+  .order-item-qty {
+    font-size: 13px; color: #1e5bb5; font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* 表单 */
+  .form-section { padding: 0 16px; }
+  .form-group { margin-bottom: 14px; }
+  .form-label {
+    display: block; font-size: 13px; color: #555;
+    font-weight: 600; margin-bottom: 6px;
+  }
+  .form-label .required { color: #e53e3e; margin-left: 2px; }
+  .form-input, .form-textarea {
+    width: 100%; padding: 10px 12px;
+    border: 1.5px solid #e2e8f0; border-radius: 8px;
+    font-size: 14px; color: #333; outline: none;
+    transition: border-color .2s; font-family: inherit;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: #1e5bb5; }
+  .form-textarea { min-height: 80px; resize: vertical; }
+
+  /* 提交按钮 */
+  .submit-section { padding: 16px; }
+  .submit-btn {
+    width: 100%; height: 48px; border: none; border-radius: 24px;
+    background: linear-gradient(135deg, #ea580c, #c2410c);
+    color: #fff; font-size: 16px; font-weight: 700;
+    cursor: pointer; transition: all .2s;
+    box-shadow: 0 2px 12px rgba(234,88,12,.3);
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .submit-btn:active { transform: scale(.97); opacity: 0.9; }
+  .submit-btn:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; }
+
+  /* 底部提示 */
+  .footer-note {
+    text-align: center; font-size: 11px; color: #bbb;
+    padding: 8px 16px 24px; line-height: 1.6;
+  }
+
+  /* 空购物车 */
+  .empty-cart {
+    text-align: center; padding: 60px 16px;
+  }
+  .empty-cart-icon { font-size: 56px; margin-bottom: 12px; opacity: 0.4; }
+  .empty-cart-text { font-size: 15px; color: #999; margin-bottom: 8px; }
+  .empty-cart-btn {
+    display: inline-block; margin-top: 12px; padding: 10px 24px;
+    background: #1e5bb5; color: #fff; border-radius: 20px;
+    font-size: 13px; font-weight: 600; text-decoration: none;
+  }
+
+  /* 成功页 */
+  .success-page {
+    text-align: center; padding: 40px 16px; display: none;
+  }
+  .success-page.show { display: block; }
+  .success-icon { font-size: 64px; margin-bottom: 16px; }
+  .success-title { font-size: 20px; font-weight: 700; color: #222; margin-bottom: 8px; }
+  .success-sub { font-size: 14px; color: #666; line-height: 1.8; margin-bottom: 20px; }
+  .success-order-id {
+    display: inline-block; background: #f0f0f0; color: #888;
+    font-size: 12px; padding: 4px 12px; border-radius: 10px;
+    margin-bottom: 20px; font-family: monospace;
+  }
+  .back-home-btn {
+    display: inline-block; padding: 12px 32px;
+    background: #1e5bb5; color: #fff; border-radius: 22px;
+    font-size: 14px; font-weight: 600; text-decoration: none;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <nav class="nav-bar">
+    <a class="nav-back" href="index.html">← 返回首页</a>
+    <span class="nav-title">确认订单</span>
+  </nav>
+
+  <!-- 空购物车状态 -->
+  <div id="emptyState" class="empty-cart" style="display:none;">
+    <div class="empty-cart-icon">🛒</div>
+    <div class="empty-cart-text">购物车为空，请先添加商品</div>
+    <a class="empty-cart-btn" href="index.html">去选购产品</a>
+  </div>
+
+  <!-- 订单内容 -->
+  <div id="orderContent">
+
+    <!-- 订单商品 -->
+    <div class="section-title">
+      <span class="st-num">1</span> 订单商品
+    </div>
+    <div class="order-items" id="orderItems"></div>
+
+    <div style="height:8px;background:#f0f0f0;margin-top:12px;"></div>
+
+    <!-- 联系人信息 -->
+    <div class="section-title">
+      <span class="st-num">2</span> 联系人信息
+    </div>
+    <div class="form-section">
+      <div class="form-group">
+        <label class="form-label">公司名称 <span class="required">*</span></label>
+        <input class="form-input" id="ordCompany" placeholder="请输入公司名称">
+      </div>
+      <div class="form-group">
+        <label class="form-label">联系人 <span class="required">*</span></label>
+        <input class="form-input" id="ordContact" placeholder="姓名">
+      </div>
+      <div class="form-group">
+        <label class="form-label">联系电话 <span class="required">*</span></label>
+        <input class="form-input" id="ordPhone" placeholder="手机号或座机" type="tel">
+      </div>
+      <div class="form-group">
+        <label class="form-label">电子邮箱</label>
+        <input class="form-input" id="ordEmail" placeholder="用于接收报价回复" type="email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">备注</label>
+        <textarea class="form-textarea" id="ordNote" placeholder="请补充规格、交期等要求（选填）"></textarea>
+      </div>
+    </div>
+
+    <!-- 提交 -->
+    <div class="submit-section">
+      <button class="submit-btn" id="submitBtn" onclick="submitOrder()">
+        📤 提交订单
+      </button>
+    </div>
+    <div class="footer-note">
+      提交后客服将在 1 个工作日内与您联系确认
+    </div>
+
+  </div>
+
+  <!-- 提交成功 -->
+  <div id="successPage" class="success-page">
+    <div class="success-icon">✅</div>
+    <div class="success-title">订单已提交！</div>
+    <div class="success-sub">
+      感谢您的订购，我们将在<br>
+      <strong>1个工作日内</strong>与您联系确认订单详情
+    </div>
+    <div class="success-order-id" id="successOrderId"></div>
+    <br>
+    <a class="back-home-btn" href="index.html">返回首页</a>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var STORAGE_KEY = 'pines_cart';
+  var ORDERS_KEY = 'pines_orders';
+
+  // 读取购物车
+  function getCart() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    } catch (e) { return []; }
+  }
+
+  function clearCart() {
+    localStorage.removeItem(STORAGE_KEY);
+  }
+
+  function saveOrder(orderData) {
+    var orders = [];
+    try {
+      orders = JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]');
+    } catch (e) {}
+    orders.unshift(orderData);
+    localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+  }
+
+  // 渲染订单商品
+  function renderOrderItems() {
+    var items = getCart();
+    var container = document.getElementById('orderItems');
+    var emptyState = document.getElementById('emptyState');
+    var orderContent = document.getElementById('orderContent');
+    var submitBtn = document.getElementById('submitBtn');
+
+    if (items.length === 0) {
+      emptyState.style.display = 'block';
+      orderContent.style.display = 'none';
+      return;
+    }
+
+    emptyState.style.display = 'none';
+    orderContent.style.display = '';
+
+    var html = '';
+    var total = 0;
+    items.forEach(function(item, i) {
+      var qty = item.qty || 1;
+      total += qty;
+      var specsStr = '';
+      if (item.specs && item.specs.length) {
+        specsStr = item.specs.slice(0, 2).map(function(s) {
+          return s.label + ': ' + s.value;
+        }).join(' · ');
+      }
+      var imgTag = item.image
+        ? '<img class="order-item-img" src="' + item.image + '" alt="' + item.name + '" onerror="this.style.display=\'none\'">'
+        : '';
+
+      html +=
+        '<div class="order-item">' +
+          imgTag +
+          '<div class="order-item-info">' +
+            '<div class="order-item-name">' + item.name + '</div>' +
+            (specsStr ? '<div class="order-item-spec">' + specsStr + '</div>' : '') +
+          '</div>' +
+          '<div class="order-item-qty">x' + qty + '</div>' +
+        '</div>';
+    });
+
+    container.innerHTML = html;
+    submitBtn.innerHTML = '📤 提交订单（共 ' + total + ' 件商品）';
+  }
+
+  // 提交订单
+  window.submitOrder = function() {
+    var company = (document.getElementById('ordCompany').value || '').trim();
+    var contact = (document.getElementById('ordContact').value || '').trim();
+    var phone = (document.getElementById('ordPhone').value || '').trim();
+    var email = (document.getElementById('ordEmail').value || '').trim();
+    var note = (document.getElementById('ordNote').value || '').trim();
+
+    if (!company) { alert('请填写公司名称'); return; }
+    if (!contact) { alert('请填写联系人'); return; }
+    if (!phone) { alert('请填写联系电话'); return; }
+
+    var items = getCart();
+    if (items.length === 0) { alert('购物车为空'); return; }
+
+    var orderId = 'PO' + Date.now().toString(36).toUpperCase();
+    var orderData = {
+      orderId: orderId,
+      company: company,
+      contact: contact,
+      phone: phone,
+      email: email,
+      note: note,
+      items: items,
+      itemCount: items.reduce(function(s, i) { return s + (i.qty || 1); }, 0),
+      time: new Date().toLocaleString('zh-CN'),
+      timestamp: Date.now()
+    };
+
+    saveOrder(orderData);
+    clearCart();
+
+    // 显示成功页
+    document.getElementById('orderContent').style.display = 'none';
+    document.getElementById('successPage').classList.add('show');
+    document.getElementById('successOrderId').textContent = '订单编号：' + orderId;
+
+    // 滚动到顶部
+    window.scrollTo(0, 0);
+  };
+
+  // 初始化
+  renderOrderItems();
+})();
+</script>
+
+<script src="js/cart.js"></script>
+</body>
+</html>
